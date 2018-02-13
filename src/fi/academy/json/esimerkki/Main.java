@@ -1,3 +1,5 @@
+package fi.academy.json.esimerkki;
+
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
