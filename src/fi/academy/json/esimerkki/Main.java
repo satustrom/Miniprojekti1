@@ -5,5 +5,7 @@ public class Main {
         System.out.println("Hello hello");
         System.out.println("Satu vastaa hello");
         JunatLiikkeella.liikkeella();
+
+
     }
 }
