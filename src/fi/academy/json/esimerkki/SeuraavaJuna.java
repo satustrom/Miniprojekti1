@@ -18,15 +18,17 @@ public class SeuraavaJuna {
         return kAsema;
     }*/
 
-    public static void seuraavaJuna() {
-        Scanner lukija = new Scanner(System.in);
+    public static void seuraavaJuna(String lahtoasema, String maaraasema) {
+/*        Scanner lukija = new Scanner(System.in);
     // Kysytään käyttäjältä lähtöasema
         System.out.println("Miltä asemalta lähdet? ");
         String lAsema = lukija.nextLine();
     // Kysytään käyttäjältä määränpääasema
         System.out.println("Minne olet menossa? ");
-        String kAsema = lukija.nextLine();
+        String kAsema = lukija.nextLine();*/
 
+        String lAsema = lahtoasema;
+        String kAsema = maaraasema;
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         String hakuehdot = "include_nonstopping=false";
@@ -45,16 +47,21 @@ public class SeuraavaJuna {
             System.out.println("Seuraava juna välillä: " +lAsema +" - " + kAsema);
 
             int i = 0;
-            System.out.printf("Juna %s - %s \n\t Lähtenyt: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n"
+            System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n %s\n"
                     ,junat.get(i).getTrainType()
                     ,junat.get(i).getTrainNumber()
                     ,junat.get(i).getDepartureDate()
                     ,junat.get(i).isRunningCurrently()
-                    ,junat.get(i).getTrainCategory());
+                    ,junat.get(i).getTrainCategory()
+                    ,junat.get(i).getTimeTableRows());
             System.out.println("----------------------------------------");
 
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    public static void main(String[] args) {
+        seuraavaJuna("HKI","PSL");
     }
 }
