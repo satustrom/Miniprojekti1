@@ -1,3 +1,5 @@
+// Sami Nykänen
+
 package fi.academy.json.esimerkki;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +25,6 @@ public class JunatLiikkeella {
             // Seuraavaa varten on toteutettava TimeTableRow luokka:
             //System.out.println(junat.get(0).getTimeTableRows().get(0).getScheduledTime());
             System.out.println("\n\n");
-
 
           //  int tulostustenMaara = lkm;
             for (int i = 0; i < junat.size() ; i++) {
