@@ -2,6 +2,8 @@ package fi.academy.json.esimerkki;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Comparator;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asematieto {
 
@@ -15,15 +17,8 @@ public class Asematieto {
     private double latitude;
 
     public String perustietoja() {
-        return "Asemakaupunki: " + stationName + " Aseman lyhenne: " + stationShortCode + " Onko matkustusliikennettä: " +
+        return "Asemakaupunki: " + stationName + ", " + stationShortCode + ", Onko matkustusliikennettä: " +
                 passengerTraffic;
-    }
-
-    @Override
-    public String toString() {
-        return "Asematiedot: {" + "Asemakaupunki: " + stationName
-                + ",\n Aseman lyhenne: '" + stationShortCode
-                + ",\n Onko matkustusliikennettä: '" + passengerTraffic;
     }
 
     public String getStationName() { return stationName; }
@@ -84,5 +79,15 @@ public class Asematieto {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-
 }
+
+/*Tämä luokka tehtiin aakkosjärjestystä varten, ei enää välttämättä tarpeellinen:
+class AsemaVertailija implements Comparator<Asematieto> {
+    @Override
+    public int compare (Asematieto asematieto1, Asematieto asematieto2) {
+        if(asematieto1.isPassengerTraffic()!=asematieto2.isPassengerTraffic())
+            return asematieto1.isPassengerTraffic() ?  -1 : 1;
+        return asematieto1.getStationName().compareTo(asematieto2.getStationName());
+    }
+}*/
+

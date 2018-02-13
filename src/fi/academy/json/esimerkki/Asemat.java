@@ -6,39 +6,42 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Asemat {
 
     Asematieto asematieto = new Asematieto();
 
-    public static void main(String[] args) { lueDataa(); }
-
-    private static void lueDataa() {
+    //täällä tulostetaan asemakaupunkeja
+    //voit kutsua tätä siältöä mainissa: Asemat.asemaData();
+    public static void asemaData() {
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         try {
-            URL url = new URL(baseurl+"/metadata/stations");
+            URL url = new URL(baseurl + "/metadata/stations");
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Asematieto.class);
-            List<Asematieto> asemat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
-            //System.out.println(junat.get(0).perustietoja());
-            // Seuraavaa varten on toteutettava TimeTableRow luokka:
-            //System.out.println(junat.get(0).getTimeTableRows().get(0).getScheduledTime());
-            System.out.println("\n\n");
+            //Tässä listassa on kaikki asemat
+            List<Asematieto> kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
 
-            //System.out.println(asemat.get(0));
+            //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
+            List<Asematieto> henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
+            for(Asematieto asematieto : henkiloAsemat)
+                System.out.println(asematieto.perustietoja());
 
-
-
-            for (int i = 0; i <asemat.size() ; i++) {
-                System.out.println(asemat.get(i).perustietoja());
-            }
-
+            /*Täältä löytyy vielä tulostus, jos haluaa tulostaa kaikki asemat
+            for (int i = 0; i < kaikkiAsemat.size(); i++) {
+                System.out.println(kaikkiAsemat.get(i).perustietoja());
+            }*/
 
 
         } catch (Exception ex) {
             System.out.println(ex);
         }
+
+
     }
 
 }
