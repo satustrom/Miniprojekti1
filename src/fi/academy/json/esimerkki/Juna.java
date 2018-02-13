@@ -26,7 +26,19 @@ public class Juna {
 
     @Override
     public String toString() {
-        return "Juna{" + "cancelled=" + cancelled + ", commuterLineID='" + commuterLineID + '\'' + ", departureDate=" + departureDate + ", operatorShortCode='" + operatorShortCode + '\'' + ", operatorUICCode=" + operatorUICCode + ", runningCurrently=" + runningCurrently + ", timeTableRows=" + timeTableRows + ", timetableAcceptanceDate=" + timetableAcceptanceDate + ", timetableType='" + timetableType + '\'' + ", trainCategory='" + trainCategory + '\'' + ", trainNumber=" + trainNumber + ", trainType='" + trainType + '\'' + ", version=" + version + '}';
+        return "Juna{" + "cancelled=" + cancelled
+                + ",\n commuterLineID='" + commuterLineID
+                + '\'' + ",\n departureDate=" + departureDate
+                + ",\n operatorShortCode='" + operatorShortCode + '\''
+                + ",\n operatorUICCode=" + operatorUICCode
+                + ",\n runningCurrently=" + runningCurrently
+                + ",\n timeTableRows=" + timeTableRows
+                + ",\n timetableAcceptanceDate=" + timetableAcceptanceDate
+                + ",\n timetableType='" + timetableType + '\''
+                + ",\n trainCategory='" + trainCategory + '\''
+                + ",\n trainNumber=" + trainNumber
+                + ",\n trainType='" + trainType + '\''
+                + ",\n version=" + version + '}';
     }
 
     public boolean isCancelled() {

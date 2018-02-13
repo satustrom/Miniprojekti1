@@ -11,7 +11,7 @@ public class JunatLiikkeella {
     public static void liikkeella() {
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         try {
-            URL url = new URL(baseurl+"/live-trains/station/KÄP");
+            URL url = new URL(baseurl+"/live-trains/station/LH");
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
