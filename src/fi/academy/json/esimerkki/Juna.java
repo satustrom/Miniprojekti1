@@ -1,62 +1,28 @@
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
+package fi.academy.json.esimerkki;
 
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/*
-Vaatii Jackson kirjaston:
-File | Project Structure
-Libraries >> Add >> Maven
-Etsi "jackson-databind", valitse versio 2.0.5
-Asentuu Jacksonin databind, sekä core ja annotations
- */
+public class Juna {
 
-public class JSON_pohja_junat {
-    public static void main(String[] args) {
-        lueJunanJSONData();
-    }
-
-
-    private static void lueJunanJSONData() {
-        String baseurl = "https://rata.digitraffic.fi/api/v1";
-        try {
-            URL url = new URL(baseurl+"/live-trains/station/HKI/LH");
-            ObjectMapper mapper = new ObjectMapper();
-            CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
-            List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
-            System.out.println(junat.get(0).getTrainNumber());
-            // Seuraavaa varten on toteutettava TimeTableRow luokka:
-            //System.out.println(junat.get(0).getTimeTableRows().get(0).getScheduledTime());
-            System.out.println("\n\n");
-            System.out.println(junat.get(0));
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
-
-}
-
-
-class Juna {
-    boolean cancelled;
-    String commuterLineID;
+    private boolean cancelled;
+    private String commuterLineID;
     //LocalDate departureDate;  // Jackson ei oikein pidä Java 8 päivistä oletuksena
-    Date departureDate;
-    String operatorShortCode;
-    int operatorUICCode;
-    boolean runningCurrently;
-    List<TimeTableRow> timeTableRows;
-    Date timetableAcceptanceDate;
-    String timetableType;
-    String trainCategory;
-    int trainNumber;
-    String trainType;
-    long version;
+    private Date departureDate;
+    private String operatorShortCode;
+    private int operatorUICCode;
+    private boolean runningCurrently;
+    public List<TimeTableRow> timeTableRows;
+    private Date timetableAcceptanceDate;
+    private String timetableType;
+    private String trainCategory;
+    private int trainNumber;
+    private String trainType;
+    private long version;
+
+    public String perustiedot () {
+        return "Juna nro " + trainNumber + ", ID: " + getCommuterLineID() + ", lähtöaika: " + timetableType;
+    }
 
     @Override
     public String toString() {
@@ -82,6 +48,8 @@ class Juna {
     public Date getDepartureDate() {
         return departureDate;
     }
+
+    //public LocalDate aika () { return departureDate}
 
     public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
@@ -111,11 +79,11 @@ class Juna {
         this.runningCurrently = runningCurrently;
     }
 
-    public List<TimeTableRow> getTimeTableRows() {
+    public List<fi.academy.json.esimerkki.TimeTableRow> getTimeTableRows() {
         return timeTableRows;
     }
 
-    public void setTimeTableRows(List<TimeTableRow> timeTableRows) {
+    public void setTimeTableRows(List<fi.academy.json.esimerkki.TimeTableRow> timeTableRows) {
         this.timeTableRows = timeTableRows;
     }
 
@@ -166,9 +134,7 @@ class Juna {
     public void setVersion(long version) {
         this.version = version;
     }
-}
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-class TimeTableRow {
-}
 
+
+}
