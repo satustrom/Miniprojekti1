@@ -77,5 +77,5 @@ public class SeuraavaJuna {
             System.out.println(ex);
         }
     }
-    
+
 }
