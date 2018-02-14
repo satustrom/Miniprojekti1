@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class SeuraavaJuna {
 
-    public static void seuraavaJuna(String lahtoasema, String maaraasema) {
+    public static void kahdenKaupunginVali(String lahtoasema, String maaraasema) {
 
 //Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
         String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
