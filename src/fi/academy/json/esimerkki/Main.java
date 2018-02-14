@@ -53,7 +53,8 @@ public class Main {
                 System.out.println("Syötä lähtöasema.");
                 String lahtevienJunienAsema = lukija.nextLine();
                 System.out.println("");
-                System.out.println("Kiitos. Haetaan paikasta " + lahtevienJunienAsema + " lähteviä junia.");
+                System.out.println("Kiitos. Haetaan 5 lähtevää junaa paikasta " + lahtevienJunienAsema + ".");
+                SeuraavaJuna.tietyltaAsemalta(lahtevienJunienAsema);
 
                 // Lopettaa ohjelman -Olli
             } else if (hakuvalinta == 9 ) {
