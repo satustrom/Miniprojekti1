@@ -30,13 +30,10 @@ public class SeuraavaJuna {
 
             System.out.println("Seuraava juna välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
 
-
-
-
-
-
             int i = 0;
+// Luodaan timetablerow lista
             List<TimeTableRow> lista = junat.get(i).timeTableRows;
+// Luodaan apumuuttujat joilla saadaan aloitettua määrättyä minkä aseman aika tulostetaan ja miltä asemalta matka aloitetaan välipysäkkien tulostus
             int alkuID = 0;
             int loppuID = 0;
             for (int j = 0; j < lista.size(); j++) {
@@ -44,10 +41,8 @@ public class SeuraavaJuna {
                     alkuID = j;
                 if (lista.get(j).getStationShortCode().equals(kAsema)) {
                     loppuID = j;
-
                     continue;
                 }
-
             }
             System.out.println("----------------------------------------");
             System.out.printf("Juna %s - %s \n\t Lähtee: %s\n"
