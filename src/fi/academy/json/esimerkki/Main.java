@@ -62,9 +62,11 @@ public class Main {
                 } else if (hakuvalinta == 9) {
                     System.out.println("Kiitos kun käytit junahakupalvelua. Tervetuloa uudelleen");
                     break;
+                } else {
+                    System.out.println("Valintaasi ei löytynyt, ole hyvä ja valitse joku esitetyistä vaihtoehdoista");
 
                 }
-            } catch (java.lang.NumberFormatException ex) {
+                }catch(java.lang.NumberFormatException ex){
                 System.out.println("Valintaasi ei löytynyt, ole hyvä ja valitse joku esitetyistä vaihtoehdoista.");
             }
         }
