@@ -59,5 +59,16 @@ public class Asemat {
 
         return null;
     }
+
+    public static String palautaKaupunki (String asemaKoodi) {
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (int i = 0; i < kaikkiAsemat.size(); i++) {
+            if (asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
+                return kaikkiAsemat.get(i).getStationName();
+            }
+        }
+        return null;
+    }
 }
 
