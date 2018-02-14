@@ -39,17 +39,36 @@ public class TietynJunanKulku {
 
         List<Juna> junat = lueJunanJSONData();
 
+
         for (int i = 0; i < junat.size(); i++) {
             if ( junat.get(i).getTrainNumber() == junaNumero) {
                 Juna haettava = junat.get(i);
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
+                System.out.println("Hakemasi junan " + junaNumero+ " matkatiedot: \n \nLähtöpäivä: \t" + lista.get(0).haePVMStringina() + "\n");
                 for (int j = 0; j < lista.size(); j++) {
                     if (lista.get(j).isTrainStopping())
-                    System.out.println(Asemat.palautaKaupunki(lista.get(j).getStationShortCode()) + ", aika: " + lista.get(j).haeAikaStringina());
+                        if (j%2==0){
+                            System.out.print(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ " "+ lista.get(j).haeKellonAikaStringina() + "  -  ");
+                        } else {
+                            System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+                        }
                 }
             }
         }
 
     }
+    /* public static void tulosta () {
+        StringBuilder muotoiltu = new StringBuilder();
+        String s = "Helsinki asema 18:49";
+        String b = "18:54 Pasila asema";
+        muotoiltu.append(s);
+        if (s.length()<15){
+            muotoiltu.append("\t").append(b);
+        } else {
+            muotoiltu.append(b);
+        }
+        System.out.println(muotoiltu);
+
+    } */
 
 }

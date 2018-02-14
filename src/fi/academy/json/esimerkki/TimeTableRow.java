@@ -79,12 +79,23 @@ public class TimeTableRow {
     public Date getScheduledTime() {
         return scheduledTime;
     }
+    public String haePVMStringina () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, kielialue);
+        String paivamaara = df.format(scheduledTime);
+        return paivamaara;
+    }
+    public String haeKellonAikaStringina () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, kielialue);
+        String kellonAika = df.format(scheduledTime);
+        return kellonAika;
+    }
     public String haeAikaStringina () {
         Locale kielialue = new Locale("fi", "FI");
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, kielialue);
-
-        String myDate = df.format(scheduledTime);
-        return myDate;
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, kielialue);
+        String pvmklo = df.format(scheduledTime);
+        return pvmklo;
     }
 }
 
