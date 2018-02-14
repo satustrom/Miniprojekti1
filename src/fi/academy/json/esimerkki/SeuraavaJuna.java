@@ -66,21 +66,16 @@ public class SeuraavaJuna {
             for (int i = 0; i < 5; i++) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
 
-                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Junan tyyppi: %s\n %s\n"
+                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Junan tyyppi: %s\n"
                         , junat.get(i).getCommuterLineID()
                         , junat.get(i).getTrainNumber()
                         , lista.get(i).haeAikaStringina()
-                        , junat.get(i).getTrainCategory()
-                        , junat.get(i).getTimeTableRows());
+                        , junat.get(i).getTrainCategory());
                 System.out.println("----------------------------------------");
             }
         } catch (Exception ex) {
             System.out.println(ex);
         }
     }
-
-
-    public static void main(String[] args) {
-        tietyltaAsemalta("Malmi");
-    }
+    
 }
