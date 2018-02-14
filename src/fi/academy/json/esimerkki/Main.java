@@ -16,54 +16,62 @@ public class Main {
 
         while (true) {
 
-            // Päävalikko, josta navigoidaan numerosyöttein eri hakutoimintoihin, väärä numerosyöte aloittaa luupin alusta -Olli
-            System.out.println("Valitse toiminnon numero ja paina Enter");
-            System.out.println("1: Seuraavan junan haku lähtö- ja määräaseman perusteella.");
-            System.out.println("2: Tietyn junan tietojen haku.");
-            System.out.println("3: Lähtevien junien haku aseman perusteella.");
-            System.out.println("9: Sulje ohjelma.");
-            int hakuvalinta = Integer.parseInt(lukija.nextLine());
-
-            // Antaa käyttäjältä hakumetodille: String lahtoasema ja String maaraesema -Olli
-            if (hakuvalinta == 1) {
-                System.out.println("Seuraavan junan haku lähtö- ja määräaseman perusteella:");
+            try {
+                // Päävalikko, josta navigoidaan numerosyöttein eri hakutoimintoihin, väärä numerosyöte aloittaa luupin alusta -Olli
                 System.out.println("");
-                System.out.println("Syötä lähtöasema:");
-                String lahtoAsema = lukija.nextLine();
-                System.out.println("Syötä määräasema:");
-                String maaraAsema = lukija.nextLine();
-                System.out.println("");
-                System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoAsema + ", määräasema: " + maaraAsema + ".");
-                SeuraavaJuna.kahdenKaupunginVali(lahtoAsema,maaraAsema);
+                System.out.println("Valitse toiminnon numero ja paina Enter");
+                System.out.println("1: Seuraavan junan haku lähtö- ja määräaseman perusteella.");
+                System.out.println("2: Tietyn junan tietojen haku.");
+                System.out.println("3: Lähtevien junien haku aseman perusteella.");
+                System.out.println("9: Sulje ohjelma.");
+                int hakuvalinta = Integer.parseInt(lukija.nextLine());
+
+                // Antaa käyttäjältä hakumetodille: String lahtoasema ja String maaraesema -Olli
+                if (hakuvalinta == 1) {
+                    System.out.println("Seuraavan junan haku lähtö- ja määräaseman perusteella:");
+                    System.out.println("");
+                    System.out.println("Syötä lähtöasema:");
+                    String lahtoAsema = lukija.nextLine();
+                    System.out.println("Syötä määräasema:");
+                    String maaraAsema = lukija.nextLine();
+                    System.out.println("");
+                    System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoAsema + ", määräasema: " + maaraAsema + ".");
+                    SeuraavaJuna.kahdenKaupunginVali(lahtoAsema, maaraAsema);
 
 
+                    // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
+                } else if (hakuvalinta == 2) try {
 
-                // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
-            } else if (hakuvalinta == 2) {
-                System.out.println("Tietyn junan tietojen haku:");
-                System.out.println("");
-                System.out.println("Syötä junan numero:");
-                int junaNumero = Integer.parseInt(lukija.nextLine());
-                System.out.println("");
-                System.out.println("Kiitos. Haetaan junaa numerolla " + junaNumero + ".");
+                    System.out.println("Tietyn junan tietojen haku:");
+                    System.out.println("");
+                    System.out.println("Syötä junan numero:");
+                    int junaNumero = Integer.parseInt(lukija.nextLine());
+                    System.out.println("");
+                    System.out.println("Kiitos. Haetaan junaa numerolla " + junaNumero + ".");
+                    TietynJunanKulku.haeJuna(junaNumero);
+                } catch (java.lang.NumberFormatException ex) {
+                    System.out.println("Syötettävän tiedon tulee olla numero, palataan päävalikkoon.");
 
-                // Antaa käyttäjältä hakumetodille: String lahtevienJunienAsema -Olli
-            } else if (hakuvalinta == 3) {
-                System.out.println("Lähtevien junien haku aseman perusteella:");
-                System.out.println("Syötä lähtöasema.");
-                String lahtevienJunienAsema = lukija.nextLine();
-                System.out.println("");
-                System.out.println("Kiitos. Haetaan 5 lähtevää junaa paikasta " + lahtevienJunienAsema + ".");
-                SeuraavaJuna.tietyltaAsemalta(lahtevienJunienAsema);
+                    // Antaa käyttäjältä hakumetodille: String lahtevienJunienAsema -Olli
+                } else if (hakuvalinta == 3) {
+                    System.out.println("Lähtevien junien haku aseman perusteella:");
+                    System.out.println("Syötä lähtöasema.");
+                    String lahtevienJunienAsema = lukija.nextLine();
+                    System.out.println("");
+                    System.out.println("Kiitos. Haetaan 5 lähtevää junaa paikasta " + lahtevienJunienAsema + ".");
+                    SeuraavaJuna.tietyltaAsemalta(lahtevienJunienAsema);
 
-                // Lopettaa ohjelman -Olli
-            } else if (hakuvalinta == 9 ) {
-                System.out.println("Kiitos kun käytit junahakupalvelua. Tervetuloa uudelleen");
-                break;
+                    // Lopettaa ohjelman -Olli
+                } else if (hakuvalinta == 9) {
+                    System.out.println("Kiitos kun käytit junahakupalvelua. Tervetuloa uudelleen");
+                    break;
+                } else {
+                    System.out.println("Valintaasi ei löytynyt, ole hyvä ja valitse joku esitetyistä vaihtoehdoista");
+
+                }
+                }catch(java.lang.NumberFormatException ex){
+                System.out.println("Valintaasi ei löytynyt, ole hyvä ja valitse joku esitetyistä vaihtoehdoista.");
             }
-
-
         }
-
     }
 }
