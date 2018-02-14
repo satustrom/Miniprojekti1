@@ -30,19 +30,13 @@ public class LahdotAsemanPerusteella {
 
             System.out.println("Lähtevät junat asemalta: " +hakuAsema + ", ja seuraavan " + minuutitLahtoon + " minuutin aikana:");
 
-            int i = 0;
-            System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n %s\n"
-                    ,junaTiedot.get(i).getTrainType()
-                    ,junaTiedot.get(i).getTrainNumber()
-                    ,junat.get(i).getDepartureDate()
-                    ,junat.get(i).isRunningCurrently()
-                    ,junat.get(i).getTrainCategory()
-                    ,junat.get(i).getTimeTableRows());
-            System.out.println("----------------------------------------");
-
         } catch (Exception ex) {
             System.out.println(ex);
         }
+
+    }
+
+    public static void main(String[] args) {
 
     }
 }
