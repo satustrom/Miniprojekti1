@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+
         Scanner lukija = new Scanner(System.in);
 
         System.out.println("Tervetuloa käyttämään junahakupalvelua. Valitse hakutoiminto jota haluaisit käyttää?");
@@ -30,9 +31,12 @@ public class Main {
                 System.out.println("Syötä lähtöasema:");
                 String lahtoAsema = lukija.nextLine();
                 System.out.println("Syötä määräasema:");
-                String maaraasema = lukija.nextLine();
+                String maaraAsema = lukija.nextLine();
                 System.out.println("");
-                System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoAsema + ", määräasema: " + maaraasema + ".");
+                System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoAsema + ", määräasema: " + maaraAsema + ".");
+                SeuraavaJuna.kahdenKaupunginVali(lahtoAsema,maaraAsema);
+
+
 
                 // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
             } else if (hakuvalinta == 2) {
