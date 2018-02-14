@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Asemat {
 
@@ -25,12 +26,13 @@ public class Asemat {
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Asematieto.class);
             //Tässä listassa on kaikki asemat
-            kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+            kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
             List<Asematieto> henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
-            for(Asematieto asematieto : henkiloAsemat)
-                System.out.println(asematieto.perustietoja());
+           // for(Asematieto asematieto : henkiloAsemat)
+             // System.out.println(asematieto.getStationName());
+
 
            /*Kaikki asemat
             List<Asematieto> muutAsemat = kaikkiAsemat.stream().filter(a->!a.isPassengerTraffic()).collect(Collectors.toList());
@@ -51,18 +53,19 @@ public class Asemat {
         //String haeKaupunki = lAsema;
         if (kaikkiAsemat == null)
             asemaData();
-        for (int i = 0; i < kaikkiAsemat.size(); i++) {
-            if (asemaKaupunki.equalsIgnoreCase(kaikkiAsemat.get(i).getStationName())) {
-                return kaikkiAsemat.get(i).getStationShortCode();
+
+        for(Asematieto tieto : kaikkiAsemat) {
+            if (tieto.getStationName().startsWith(asemaKaupunki)) {
+                return tieto.getStationShortCode();
             }
         }
-
         return null;
     }
 
     public static String palautaKaupunki (String asemaKoodi) {
         if (kaikkiAsemat == null)
             asemaData();
+
         for (int i = 0; i < kaikkiAsemat.size(); i++) {
             if (asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
                 return kaikkiAsemat.get(i).getStationName();

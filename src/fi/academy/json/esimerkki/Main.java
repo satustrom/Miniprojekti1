@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+
         Scanner lukija = new Scanner(System.in);
 
         System.out.println("Tervetuloa käyttämään junahakupalvelua. Valitse hakutoiminto jota haluaisit käyttää?");
@@ -18,8 +19,8 @@ public class Main {
             // Päävalikko, josta navigoidaan numerosyöttein eri hakutoimintoihin, väärä numerosyöte aloittaa luupin alusta -Olli
             System.out.println("Valitse toiminnon numero ja paina Enter");
             System.out.println("1: Seuraavan junan haku lähtö- ja määräaseman perusteella.");
-            System.out.println("2: Tietyn kaukojunan tietojen haku.");
-            System.out.println("3: Tietyn lähijunan tietojen haku.");
+            System.out.println("2: Tietyn junan tietojen haku.");
+            System.out.println("3: Lähtevien junien haku aseman perusteella.");
             System.out.println("9: Sulje ohjelma.");
             int hakuvalinta = Integer.parseInt(lukija.nextLine());
 
@@ -28,32 +29,31 @@ public class Main {
                 System.out.println("Seuraavan junan haku lähtö- ja määräaseman perusteella:");
                 System.out.println("");
                 System.out.println("Syötä lähtöasema:");
-                String lahtoasema = lukija.nextLine();
+                String lahtoAsema = lukija.nextLine();
                 System.out.println("Syötä määräasema:");
-                String maaraasema = lukija.nextLine();
+                String maaraAsema = lukija.nextLine();
                 System.out.println("");
-                System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoasema + ", määräasema: " + maaraasema + ".");
+                System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoAsema + ", määräasema: " + maaraAsema + ".");
+                SeuraavaJuna.kahdenKaupunginVali(lahtoAsema,maaraAsema);
 
-                // Antaa käyttäjältä hakumetodille: int kaukojunaNumero ja String kaukojunaTyyppi -Olli
+
+
+                // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
             } else if (hakuvalinta == 2) {
-                System.out.println("Tietyn kaukojunan tietojen haku:");
+                System.out.println("Tietyn junan tietojen haku:");
                 System.out.println("");
-                System.out.println("Syötä kaukojunan tyyppi(IC = Intercity, P=Pendolino):");
-                String kaukojunaTyyppi = lukija.nextLine();
-                System.out.println("Syötä kaukojunan numero:");
-                int kaukojunaNumero = Integer.parseInt(lukija.nextLine());
+                System.out.println("Syötä junan numero:");
+                int junaNumero = Integer.parseInt(lukija.nextLine());
                 System.out.println("");
-                System.out.println("Kiitos. Haetaan kaukojunaa " + kaukojunaTyyppi + kaukojunaNumero + ".");
+                System.out.println("Kiitos. Haetaan junaa numerolla " + junaNumero + ".");
 
-                // Antaa käyttäjältä hakumetodille: int lahijunaNumero ja String lahijunaTyyppi -Olli
+                // Antaa käyttäjältä hakumetodille: String lahtevienJunienAsema -Olli
             } else if (hakuvalinta == 3) {
-                System.out.println("Tietyn lähijunan tietojen haku:");
-                System.out.println("Syötä junan kirjainkoodi(Y,X,U,L,E,A,P,I,N,K,R,T,D,Z):");
-                String lahijunaTyyppi = lukija.nextLine();
-                System.out.println("Syötä junan numero");
-                int lahijunaNumero = Integer.parseInt(lukija.nextLine());
+                System.out.println("Lähtevien junien haku aseman perusteella:");
+                System.out.println("Syötä lähtöasema.");
+                String lahtevienJunienAsema = lukija.nextLine();
                 System.out.println("");
-                System.out.println("Kiitos. Haetaan lähijunaa " + lahijunaTyyppi + lahijunaNumero + ".");
+                System.out.println("Kiitos. Haetaan paikasta " + lahtevienJunienAsema + " lähteviä junia.");
 
                 // Lopettaa ohjelman -Olli
             } else if (hakuvalinta == 9 ) {

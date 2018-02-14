@@ -10,39 +10,21 @@ import java.util.Scanner;
 
 public class SeuraavaJuna {
 
-/*    private lahtoAsema(String lahtoasema){
-        return lAsema;
-    }
+    public static void kahdenKaupunginVali(String lahtoasema, String maaraasema) {
 
-    private kohdeAsema(String kohdeasema){
-        return kAsema;
-    }*/
-
-    public static void seuraavaJuna(String lahtoasema, String maaraasema) {
-/*        Scanner lukija = new Scanner(System.in);
-    // Kysytään käyttäjältä lähtöasema
-        System.out.println("Miltä asemalta lähdet? ");
-        String lAsema = lukija.nextLine();
-    // Kysytään käyttäjältä määränpääasema
-        System.out.println("Minne olet menossa? ");
-        String kAsema = lukija.nextLine();*/
-
-        String lAsema = lahtoasema;
-        String kAsema = maaraasema;
+//Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
+        String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
+        String kAsema = Asemat.palautaLyhytkoodi(maaraasema);
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         String hakuehdot = "include_nonstopping=false";
 
-
-
         try {
-            //Syötetään hakuehdot URLiin
+//Syötetään hakuehdot URLiin
             URL url = new URL(baseurl+"/live-trains/station/"+lAsema+"/"+kAsema+"?"+hakuehdot);
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
-
-            System.out.println("\n\n");
 
             System.out.println("Seuraava juna välillä: " +lAsema +" - " + kAsema);
 
@@ -61,7 +43,7 @@ public class SeuraavaJuna {
         }
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         seuraavaJuna("HKI","PSL");
-    }
+    }*/
 }
