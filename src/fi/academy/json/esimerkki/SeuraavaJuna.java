@@ -3,6 +3,7 @@ package fi.academy.json.esimerkki;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,18 +53,17 @@ public class SeuraavaJuna {
 
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
-        String hakuehdot = "include_nonstopping=false";
 
         try {
 //Syötetään hakuehdot URLiin
-            URL url = new URL(baseurl + "/live-trains/station/" + lAsema + "?" + hakuehdot);
+            URL url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + "?arrived_trains=0&arriving_trains=0&departed_trains=0&departing_trains=5&include_nonstopping=false").toASCIIString());
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
 
-            System.out.println("Seuraavat 5 junaa asemalta: " + lAsema);
+            System.out.println("Haetaan 5 lähtevää junaa asemalta: " + lAsema + ".");
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < junat.size(); i++) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
 
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Junan tyyppi: %s\n"
@@ -74,6 +74,7 @@ public class SeuraavaJuna {
                 System.out.println("----------------------------------------");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println(ex);
         }
     }
