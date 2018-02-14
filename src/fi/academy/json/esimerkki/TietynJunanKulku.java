@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TietynJunanKulku {
 
     public static void main(String[] args) {
-        haeJuna(265 );
+        //JunatLiikkeella.liikkeella();
+        haeJuna(5);
     }
 
 
@@ -45,14 +47,25 @@ public class TietynJunanKulku {
                 Juna haettava = junat.get(i);
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.println("Hakemasi junan " + junaNumero+ " matkatiedot: \n \nLähtöpäivä: \t" + lista.get(0).haePVMStringina() + "\n");
-                for (int j = 0; j < lista.size(); j++) {
-                    if (lista.get(j).isTrainStopping())
-                        if (j%2==0){
-                            System.out.print(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ " "+ lista.get(j).haeKellonAikaStringina() + "  -  ");
-                        } else {
-                            System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+                if (!haettava.isRunningCurrently()){
+                    for (int j = 0; j < lista.size(); j++) {
+                        if (lista.get(j).isTrainStopping())
+                            if (j%2==0){
+                                System.out.print(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ " "+ lista.get(j).haeKellonAikaStringina() + "  -  ");
+                            } else {
+                                System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+                            }
+                    }
+                } else {
+                    for (int j = 0; j <lista.size() ; j++) {
+                        if (lista.get(j).isTrainStopping()){
+                            System.out.println(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ ", "+ lista.get(j).haeAikataulunAika() + ", " + lista.get(j).haeToteutunutAika());
                         }
+
+                    }
+
                 }
+
             }
         }
 

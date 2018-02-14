@@ -31,24 +31,38 @@ public class SeuraavaJuna {
             System.out.println("Seuraava juna välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
 
 
+
+
+
+
             int i = 0;
             List<TimeTableRow> lista = junat.get(i).timeTableRows;
-
-            System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n"
-                    , junat.get(i).getCommuterLineID()
-                    , junat.get(i).getTrainNumber()
-                    , lista.get(i).haeAikaStringina()
-                    , junat.get(i).isRunningCurrently());
-
+            int alkuID = 0;
+            int loppuID = 0;
             for (int j = 0; j < lista.size(); j++) {
-               if (j%2==0){
-                    System.out.println("\t - "+ lista.get(j).haeKellonAikaStringina()+ " " +Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
-                } /*else {
-              //      System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
-             //   }*/
+                if (lista.get(j).getStationShortCode().equals(lAsema))
+                    alkuID = j;
+                if (lista.get(j).getStationShortCode().equals(kAsema)) {
+                    loppuID = j;
+
+                    continue;
+                }
+
             }
             System.out.println("----------------------------------------");
+            System.out.printf("Juna %s - %s \n\t Lähtee: %s\n"
+                    , junat.get(i).getCommuterLineID()
+                    , junat.get(i).getTrainNumber()
+                    , lista.get(alkuID).haeAikaStringina());
 
+
+            for (int j = alkuID; j <= loppuID; j++) {
+               if (j%2==1) {
+                   System.out.println("\t\t\t\t\t - " + lista.get(j).haeKellonAikaStringina() + " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+               }
+            }
+
+            System.out.println("----------------------------------------");
 
 
         } catch (Exception ex) {
@@ -72,7 +86,7 @@ public class SeuraavaJuna {
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
-            System.out.println("Haetaan 5 lähtevää junaa asemalta: " + lAsema + ".");
+            System.out.println("Haetaan 5 lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
 
             for (int i = 0; i < junat.size(); i++) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
