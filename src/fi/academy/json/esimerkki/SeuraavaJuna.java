@@ -64,11 +64,12 @@ public class SeuraavaJuna {
             System.out.println("Seuraavat 5 junaa asemalta: " + lAsema);
 
             for (int i = 0; i < 5; i++) {
-                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n %s\n"
-                        , junat.get(i).getTrainType()
+                List<TimeTableRow> lista = junat.get(i).timeTableRows;
+
+                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Junan tyyppi: %s\n %s\n"
+                        , junat.get(i).getCommuterLineID()
                         , junat.get(i).getTrainNumber()
-                        , junat.get(i).getDepartureDate()
-                        , junat.get(i).isRunningCurrently()
+                        , lista.get(i).haeAikaStringina()
                         , junat.get(i).getTrainCategory()
                         , junat.get(i).getTimeTableRows());
                 System.out.println("----------------------------------------");
@@ -79,7 +80,7 @@ public class SeuraavaJuna {
     }
 
 
-/*    public static void main(String[] args) {
+    public static void main(String[] args) {
         tietyltaAsemalta("Malmi");
-    }*/
+    }
 }
