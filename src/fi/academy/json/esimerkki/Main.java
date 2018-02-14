@@ -40,7 +40,8 @@ public class Main {
 
 
                     // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
-                } else if (hakuvalinta == 2) {
+                } else if (hakuvalinta == 2) try {
+
                     System.out.println("Tietyn junan tietojen haku:");
                     System.out.println("");
                     System.out.println("Syötä junan numero:");
@@ -48,6 +49,8 @@ public class Main {
                     System.out.println("");
                     System.out.println("Kiitos. Haetaan junaa numerolla " + junaNumero + ".");
                     TietynJunanKulku.haeJuna(junaNumero);
+                } catch (java.lang.NumberFormatException ex) {
+                    System.out.println("Syötettävän tiedon tulee olla numero, palataan päävalikkoon.");
 
                     // Antaa käyttäjältä hakumetodille: String lahtevienJunienAsema -Olli
                 } else if (hakuvalinta == 3) {
