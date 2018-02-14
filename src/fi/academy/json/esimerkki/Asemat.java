@@ -13,35 +13,62 @@ import java.util.stream.Collectors;
 
 public class Asemat {
 
-    Asematieto asematieto = new Asematieto();
-
+    private static List<Asematieto> kaikkiAsemat;
     //täällä tulostetaan asemakaupunkeja
     //voit kutsua tätä siältöä mainissa: Asemat.asemaData();
     public static void asemaData() {
+
         String baseurl = "https://rata.digitraffic.fi/api/v1";
+
         try {
             URL url = new URL(baseurl + "/metadata/stations");
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Asematieto.class);
             //Tässä listassa on kaikki asemat
-            List<Asematieto> kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+            kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
             List<Asematieto> henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
             for(Asematieto asematieto : henkiloAsemat)
                 System.out.println(asematieto.perustietoja());
 
-            /*Täältä löytyy vielä tulostus, jos haluaa tulostaa kaikki asemat
-            for (int i = 0; i < kaikkiAsemat.size(); i++) {
-                System.out.println(kaikkiAsemat.get(i).perustietoja());
-            }*/
+           /*Kaikki asemat
+            List<Asematieto> muutAsemat = kaikkiAsemat.stream().filter(a->!a.isPassengerTraffic()).collect(Collectors.toList());
+            for(Asematieto asematieto : muutAsemat)
+                System.out.println(asematieto.perustietoja());*/
 
+//            for (int i = 0; i < asemat.size(); i++) {
+//                System.out.println(asemat.get(i).perustietoja());
+//            }
 
         } catch (Exception ex) {
             System.out.println(ex);
         }
-
-
     }
 
+    public static String palautaLyhytkoodi(String asemaKaupunki) {
+        //Asematieto asematieto = new Asematieto();
+        //String haeKaupunki = lAsema;
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (int i = 0; i < kaikkiAsemat.size(); i++) {
+            if (asemaKaupunki.equalsIgnoreCase(kaikkiAsemat.get(i).getStationName())) {
+                return kaikkiAsemat.get(i).getStationShortCode();
+            }
+        }
+
+        return null;
+    }
+
+    public static String palautaKaupunki (String asemaKoodi) {
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (int i = 0; i < kaikkiAsemat.size(); i++) {
+            if (asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
+                return kaikkiAsemat.get(i).getStationName();
+            }
+        }
+        return null;
+    }
 }
+
