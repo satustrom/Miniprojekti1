@@ -29,8 +29,8 @@ public class Asemat {
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
             List<Asematieto> henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
-            for(Asematieto asematieto : henkiloAsemat)
-                System.out.println(asematieto.perustietoja());
+            //for(Asematieto asematieto : henkiloAsemat)
+              //  System.out.println(asematieto.perustietoja());
 
            /*Kaikki asemat
             List<Asematieto> muutAsemat = kaikkiAsemat.stream().filter(a->!a.isPassengerTraffic()).collect(Collectors.toList());
