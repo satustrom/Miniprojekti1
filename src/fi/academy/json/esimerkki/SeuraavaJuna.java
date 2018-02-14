@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class SeuraavaJuna {
 
+
     public static void kahdenKaupunginVali(String lahtoasema, String maaraasema) {
 
 //Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
@@ -21,21 +22,21 @@ public class SeuraavaJuna {
 
         try {
 //Syötetään hakuehdot URLiin
-            URL url = new URL(baseurl+"/live-trains/station/"+lAsema+"/"+kAsema+"?"+hakuehdot);
+            URL url = new URL(baseurl + "/live-trains/station/" + lAsema + "/" + kAsema + "?" + hakuehdot);
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
 
-            System.out.println("Seuraava juna välillä: " +lAsema +" - " + kAsema);
+            System.out.println("Seuraava juna välillä: " + lAsema + " - " + kAsema);
 
             int i = 0;
             System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n %s\n"
-                    ,junat.get(i).getTrainType()
-                    ,junat.get(i).getTrainNumber()
-                    ,junat.get(i).getDepartureDate()
-                    ,junat.get(i).isRunningCurrently()
-                    ,junat.get(i).getTrainCategory()
-                    ,junat.get(i).getTimeTableRows());
+                    , junat.get(i).getTrainType()
+                    , junat.get(i).getTrainNumber()
+                    , junat.get(i).getDepartureDate()
+                    , junat.get(i).isRunningCurrently()
+                    , junat.get(i).getTrainCategory()
+                    , junat.get(i).getTimeTableRows());
             System.out.println("----------------------------------------");
 
         } catch (Exception ex) {
@@ -43,7 +44,42 @@ public class SeuraavaJuna {
         }
     }
 
+
+    public static void tietyltaAsemalta(String lahtoasema) {
+
+//Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
+        String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
+
+
+        String baseurl = "https://rata.digitraffic.fi/api/v1";
+        String hakuehdot = "include_nonstopping=false";
+
+        try {
+//Syötetään hakuehdot URLiin
+            URL url = new URL(baseurl + "/live-trains/station/" + lAsema + "?" + hakuehdot);
+            ObjectMapper mapper = new ObjectMapper();
+            CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
+            List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+
+            System.out.println("Seuraavat 5 junaa asemalta: " + lAsema);
+
+            for (int i = 0; i < 5; i++) {
+                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n %s\n"
+                        , junat.get(i).getTrainType()
+                        , junat.get(i).getTrainNumber()
+                        , junat.get(i).getDepartureDate()
+                        , junat.get(i).isRunningCurrently()
+                        , junat.get(i).getTrainCategory()
+                        , junat.get(i).getTimeTableRows());
+                System.out.println("----------------------------------------");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+
 /*    public static void main(String[] args) {
-        seuraavaJuna("HKI","PSL");
+        tietyltaAsemalta("Malmi");
     }*/
 }
