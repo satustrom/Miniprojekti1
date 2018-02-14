@@ -28,17 +28,28 @@ public class SeuraavaJuna {
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
 
-            System.out.println("Seuraava juna välillä: " + lAsema + " - " + kAsema);
+            System.out.println("Seuraava juna välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
+
 
             int i = 0;
-            System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n %s\n"
-                    , junat.get(i).getTrainType()
+            List<TimeTableRow> lista = junat.get(i).timeTableRows;
+
+            System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Liikkeellä: %s\n"
+                    , junat.get(i).getCommuterLineID()
                     , junat.get(i).getTrainNumber()
-                    , junat.get(i).getDepartureDate()
-                    , junat.get(i).isRunningCurrently()
-                    , junat.get(i).getTrainCategory()
-                    , junat.get(i).getTimeTableRows());
+                    , lista.get(i).haeAikaStringina()
+                    , junat.get(i).isRunningCurrently());
+
+            for (int j = 0; j < lista.size(); j++) {
+               if (j%2==0){
+                    System.out.println("\t - "+ lista.get(j).haeKellonAikaStringina()+ " " +Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+                } /*else {
+              //      System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+             //   }*/
+            }
             System.out.println("----------------------------------------");
+
+
 
         } catch (Exception ex) {
             System.out.println(ex);
@@ -53,10 +64,11 @@ public class SeuraavaJuna {
 
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
+        String hakuehdot = "?arrived_trains=0&arriving_trains=0&departed_trains=0&departing_trains=5&include_nonstopping=false";
 
         try {
 //Syötetään hakuehdot URLiin
-            URL url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + "?arrived_trains=0&arriving_trains=0&departed_trains=0&departing_trains=5&include_nonstopping=false").toASCIIString());
+            URL url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + hakuehdot).toASCIIString());
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
@@ -65,11 +77,11 @@ public class SeuraavaJuna {
             for (int i = 0; i < junat.size(); i++) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
 
-                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Junan tyyppi: %s\n"
+                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Määränpää: %s\n"
                         , junat.get(i).getCommuterLineID()
                         , junat.get(i).getTrainNumber()
                         , lista.get(i).haeAikaStringina()
-                        , junat.get(i).getTrainCategory());
+                        , Asemat.palautaKaupunki(lista.get(lista.size()-1).getStationShortCode()));
                 System.out.println("----------------------------------------");
             }
         } catch (Exception ex) {
