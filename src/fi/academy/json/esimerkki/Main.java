@@ -34,6 +34,7 @@ public class Main {
                 String maaraasema = lukija.nextLine();
                 System.out.println("");
                 System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoasema + ", määräasema: " + maaraasema + ".");
+                SeuraavaJuna.seuraavaJuna(lahtoasema,maaraasema);
 
                 // Antaa käyttäjältä hakumetodille: int kaukojunaNumero ja String kaukojunaTyyppi -Olli
             } else if (hakuvalinta == 2) {

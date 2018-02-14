@@ -21,21 +21,19 @@ public class JunatLiikkeella {
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
-            //(System.out.println(junat.get(0).getTrainNumber());
-            // Seuraavaa varten on toteutettava TimeTableRow luokka:
-            //System.out.println(junat.get(0).getTimeTableRows().get(0).getScheduledTime());
-            System.out.println("\n\n");
 
           //  int tulostustenMaara = lkm;
             for (int i = 0; i < junat.size() ; i++) {
                 String tulostus = "";
                 if (junat.get(i).isRunningCurrently()) {
-                    System.out.printf("Juna %s - %s \n\t Lähtenyt: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n"
+                    System.out.printf("Juna %s - %s \n\t Lähtenyt: %s\n\t Liikkeellä: %s\n\t Junan tyyppi: %s\n\t commuterlineID: %s\n"
                             ,junat.get(i).getTrainType()
                             ,junat.get(i).getTrainNumber()
                             ,junat.get(i).getDepartureDate()
                             ,junat.get(i).isRunningCurrently()
-                            ,junat.get(i).getTrainCategory());
+                            ,junat.get(i).getTrainCategory()
+                            ,junat.get(i).getCommuterLineID());
+
                     System.out.println("----------------------------------------");
                 }
 
@@ -45,4 +43,5 @@ public class JunatLiikkeella {
             System.out.println(ex);
         }
     }
+
 }
