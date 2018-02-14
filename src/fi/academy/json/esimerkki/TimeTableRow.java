@@ -23,10 +23,22 @@ public class TimeTableRow {
     private boolean cancelled;
     @JsonFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", locale = "UTC")
     private Date scheduledTime;
-    private String actualTime;
+    private Date liveEstimateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", locale = "UTC")
+    private Date actualTime;
     private int differenceInMinutes;
     //private String [] causes;
     //private List<String> trainReady;
+
+
+    public Date getLiveEstimateTime() {
+        return liveEstimateTime;
+    }
+
+    public void setLiveEstimateTime(Date liveEstimateTime) {
+        this.liveEstimateTime = liveEstimateTime;
+    }
+
 
     public int getStationUICCode() {
         return stationUICCode;
@@ -56,7 +68,7 @@ public class TimeTableRow {
         return cancelled;
     }
 
-    public String getActualtime() {
+    public Date getActualtime() {
         return actualTime;
     }
 
@@ -96,6 +108,23 @@ public class TimeTableRow {
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, kielialue);
         String pvmklo = df.format(scheduledTime);
         return pvmklo;
+    }
+    public String haeAikataulunAika () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getTimeInstance(DateFormat.LONG, kielialue);
+        String aikataulu = " aikataulu: " + df.format(scheduledTime);
+        return aikataulu;
+    }
+    public String haeToteutunutAika () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getTimeInstance(DateFormat.LONG, kielialue);
+        String toteutunut= "";
+        if(actualTime== null){
+            toteutunut=" juna ei ole vielä ohittanut pysähdyspaikkaa, arvioitu aika: " + df.format(liveEstimateTime);
+        } else {
+            toteutunut=" toteutunut: " + df.format(actualTime);
+        }
+        return toteutunut;
     }
 }
 
