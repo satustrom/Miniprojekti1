@@ -29,8 +29,8 @@ public class Asemat {
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
             List<Asematieto> henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
-            for(Asematieto asematieto : henkiloAsemat)
-                System.out.println(asematieto.perustietoja());
+            //for(Asematieto asematieto : henkiloAsemat)
+              //  System.out.println(asematieto.perustietoja());
 
            /*Kaikki asemat
             List<Asematieto> muutAsemat = kaikkiAsemat.stream().filter(a->!a.isPassengerTraffic()).collect(Collectors.toList());
@@ -57,6 +57,17 @@ public class Asemat {
             }
         }
 
+        return null;
+    }
+
+    public static String palautaKaupunki (String asemaKoodi) {
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (int i = 0; i < kaikkiAsemat.size(); i++) {
+            if (asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
+                return kaikkiAsemat.get(i).getStationName();
+            }
+        }
         return null;
     }
 }
