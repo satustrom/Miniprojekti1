@@ -3,10 +3,12 @@ package fi.academy.json.esimerkki;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TimeTableRow {
@@ -19,7 +21,7 @@ public class TimeTableRow {
     private boolean commercialStop;
     //private int commercialTrack;
     private boolean cancelled;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", locale = "UTC")
     private Date scheduledTime;
     private String actualTime;
     private int differenceInMinutes;
@@ -77,4 +79,23 @@ public class TimeTableRow {
     public Date getScheduledTime() {
         return scheduledTime;
     }
+    public String haePVMStringina () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, kielialue);
+        String paivamaara = df.format(scheduledTime);
+        return paivamaara;
+    }
+    public String haeKellonAikaStringina () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, kielialue);
+        String kellonAika = df.format(scheduledTime);
+        return kellonAika;
+    }
+    public String haeAikaStringina () {
+        Locale kielialue = new Locale("fi", "FI");
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, kielialue);
+        String pvmklo = df.format(scheduledTime);
+        return pvmklo;
+    }
 }
+
