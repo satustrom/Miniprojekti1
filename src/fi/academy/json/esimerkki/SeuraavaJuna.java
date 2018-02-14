@@ -27,11 +27,12 @@ public class SeuraavaJuna {
         System.out.println("Minne olet menossa? ");
         String kAsema = lukija.nextLine();*/
 
-        String lAsema = lahtoasema;
-        String kAsema = maaraasema;
+        String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
+        String kAsema = Asemat.palautaLyhytkoodi(maaraasema);
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         String hakuehdot = "include_nonstopping=false";
+
 
 
 
@@ -61,7 +62,7 @@ public class SeuraavaJuna {
         }
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         seuraavaJuna("HKI","PSL");
-    }
+    }*/
 }
