@@ -14,10 +14,12 @@ import java.util.stream.Collectors;
 public class Asemat {
 
     private static List<Asematieto> kaikkiAsemat;
-    private static List<Asematieto> henkiloAsemat;
     private static List<Asematieto> kaupungit;
-    //täällä tulostetaan asemakaupunkeja
-    //voit kutsua tätä siältöä mainissa: Asemat.asemaData();
+
+    //Asemat-luokka kerää metadatasta kaikki Suomen asemat.
+    //Tätä luokkaa käytetään, kun mainissa tai muissa luokissa halutaan vaihtaa lyhennetty koodi pidennetyksi koodiksi
+    //-Satu
+
     public static void asemaData() {
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
@@ -29,9 +31,6 @@ public class Asemat {
             //Tässä listassa on kaikki asemat
             kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);
 
-            //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
-            henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
-
             kaupungit = new ArrayList<>(kaikkiAsemat);
             kaupungit
                     .stream()
@@ -39,29 +38,15 @@ public class Asemat {
                         if (s.getStationName().endsWith(" asema"))
                                     s.setStationName(s.getStationName().substring(0,s.getStationName().lastIndexOf(" asema")));
                         });
-                    //.collect(Collectors.toList());
-
-           // for(Asematieto asematieto : henkiloAsemat)
-             // System.out.println(asematieto.getStationName());
-
-
-           /*Kaikki asemat
-            List<Asematieto> muutAsemat = kaikkiAsemat.stream().filter(a->!a.isPassengerTraffic()).collect(Collectors.toList());
-            for(Asematieto asematieto : muutAsemat)
-                System.out.println(asematieto.perustietoja());*/
-
-//            for (int i = 0; i < asemat.size(); i++) {
-//                System.out.println(asemat.get(i).perustietoja());
-//            }
 
         } catch (Exception ex) {
             System.out.println(ex);
         }
     }
-
+    //täällä palautetaan lyhyt koodi, kun syötetään kaupunki.
+    //Esimerkiksi käyttäjän syöttäessa kaupungin nimen, hakuun palautuu sen koodi, jolla tietoa haetaan.
+    //-Satu
     public static String palautaLyhytkoodi(String asemaKaupunki) {
-        //Asematieto asematieto = new Asematieto();
-        //String haeKaupunki = lAsema;
         if (kaikkiAsemat == null)
             asemaData();
 
@@ -72,6 +57,10 @@ public class Asemat {
         }
         return null;
     }
+
+    //täällä palautetaan kaupungin nimi, kun hakuun on kirjoitettu asemakoodi.
+    //jos asema ei ole matkustusliikenteen käytössä, palautetaan kaupungin lisäksi muistutus siitä
+    //-Satu
 
     public static String palautaKaupunki (String asemaKoodi) {
         if (kaupungit == null)
@@ -84,18 +73,11 @@ public class Asemat {
                 return kaupungit.get(i).getStationName() + " (ei matkustusliikenteen käytössä)";
         }
 
-/*
-        if (kaikkiAsemat == null)
-            asemaData();
-        for (int i = 0; i < kaikkiAsemat.size() ; i++) {
-            if(asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
-                return kaikkiAsemat.get(i).getStationName() + " (ei matkustusliikenteen käytössä)";
-            }
-        }
-*/
         return null;
     }
 
+    //täällä palautetaan aseman koordinaatit kaupungin perusteella.
+    //-Satu
     public static double palautaKoordinaatit (String asemaKaupunki) {
         if (kaikkiAsemat == null)
             asemaData();
