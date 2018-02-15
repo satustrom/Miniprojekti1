@@ -1,8 +1,19 @@
 package fi.academy.json.esimerkki;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.awt.*;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Juna {
 
     private boolean cancelled;
@@ -19,6 +30,7 @@ public class Juna {
     private int trainNumber;
     private String trainType;
     private long version;
+
 
     public String perustiedot () {
         return "Juna nro " + trainNumber + ", ID: " + getCommuterLineID() + ", lähtöaika: " + timetableType;
@@ -147,7 +159,5 @@ public class Juna {
     public void setVersion(long version) {
         this.version = version;
     }
-
-
 
 }
