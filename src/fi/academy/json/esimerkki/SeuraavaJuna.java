@@ -98,6 +98,8 @@ public class SeuraavaJuna {
             junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
             // System.out.println("Haetaan 5 seuraavaksi lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
 
+
+// Sortataaan junat ajan mukaan ja haetaan oikea lähtöaseman aika
             Collections.sort(junat, (eka, toka) -> {
                 Date ekaaika = null, tokaaika = null;
                 for (TimeTableRow rivi : eka.getTimeTableRows()) {
@@ -136,6 +138,7 @@ public class SeuraavaJuna {
                 System.out.println("-------------------------------------------");
 
             }
+// Jos lähteviä junia on alle 5 niin tulostetaan viesti perään
         if (junat.size() < 5) {
             System.out.println("Valitettavasti tänään ei lähde enempää junia.");
             System.out.println("-------------------------------------------");
