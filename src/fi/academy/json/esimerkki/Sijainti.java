@@ -10,6 +10,11 @@ import java.util.List;
 
 public class Sijainti {
 
+    //Tämän luokan haeJunanKoordinaatit-metodin avulla voi hakea junanumerolla junan tämänhetkisen
+    //sijainnin. GPS-datan tuotto kytkeytyy päälle ja pois veturin kuljettajan toimesta,
+    // joten se ei ole aukottavan luotettavaa tai saatavilla jokaisesta junasta.
+    //-Paula-
+
     public static void main(String[] args) {
         //JunatLiikkeella.liikkeella();
         haeJunanKoordinaatit(3);
@@ -34,7 +39,7 @@ public class Sijainti {
             URL url = new URL(baseurl+"/train-locations/latest/");
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, JunaGPS.class);
-            List<JunaGPS> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+            List<JunaGPS> junat = mapper.readValue(url, tarkempiListanTyyppi);
 
             return junat;
 

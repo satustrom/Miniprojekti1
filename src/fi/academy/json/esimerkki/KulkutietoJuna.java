@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KulkutietoJuna {
 
+    //Tämän luokan avulla voidaan hakea junan kulkutietoviestejä, minka avulla saa junan seuraavan ja edellisen aseman
+    //(datan laatu ei optimaalista)
+    //-Paula-
+
     private String trainNumber;
     private String nextStation;
     private String previousStation;
