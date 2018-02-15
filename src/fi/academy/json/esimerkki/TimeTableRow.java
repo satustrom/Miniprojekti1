@@ -120,7 +120,7 @@ public class TimeTableRow {
         DateFormat df = new SimpleDateFormat("HH:mm:ss");
         String toteutunut= "";
         if(actualTime== null){
-            toteutunut=" juna ei ole vielä ohittanut pysähdyspaikkaa, arvioitu aika: " + df.format(liveEstimateTime);
+            toteutunut=" toteutunutta aikaa ei saatavilla, arvioitu aika: " + df.format(liveEstimateTime);
         } else {
             toteutunut=" toteutunut: " + df.format(actualTime);
         }
