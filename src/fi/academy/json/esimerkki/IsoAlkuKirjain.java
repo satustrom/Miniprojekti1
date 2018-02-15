@@ -2,9 +2,6 @@ package fi.academy.json.esimerkki;
 
 public class IsoAlkuKirjain {
 
-    public static StringBuilder alkukirjainmuotoilu;
-
-
     public static String alkukirjainMuotoilu(String sana){
         String uusiSana = sana.toLowerCase();
 
