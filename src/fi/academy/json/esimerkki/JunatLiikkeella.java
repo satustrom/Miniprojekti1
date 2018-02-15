@@ -2,6 +2,8 @@
 
 package fi.academy.json.esimerkki;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -36,8 +38,14 @@ public class JunatLiikkeella {
         List<Juna> junat = null;
         try {
             junat = mapper.readValue(url, tarkempiListanTyyppi);
-        } catch (IOException e) {
+        } catch (NullPointerException ex) {
             System.out.println("Junat listassa virhe");
+        } catch (JsonParseException e) {
+            System.out.println("Ei löytynyt");
+        } catch (JsonMappingException e) {
+            System.out.println("Ei löytynyt");
+        } catch (IOException e) {
+            System.out.println("Ei löytynyt");
         }
 
         System.out.println("Tulostetaan junat välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
