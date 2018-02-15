@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TietynJunanKulku {
 
-    private static StringBuilder kokosatsi = new StringBuilder();
+    public static StringBuilder kokosatsi = new StringBuilder();
 
     //metodi joka hakee avointa dataa, luo ja palauttaa listan Junia -Paula-
     private static List<Juna> lueJunanJSONData() {
@@ -95,7 +95,7 @@ public class TietynJunanKulku {
 
     }
 
-    private static void muotoileParillinen(String asema, String aika) {
+    public static void muotoileParillinen(String asema, String aika) {
         StringBuilder muotoiltu = new StringBuilder();
         muotoiltu.append(asema);
         if (asema.length()<20){
