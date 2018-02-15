@@ -70,7 +70,7 @@ public class Asemat {
                 return tieto.getStationShortCode();
             }
         }
-        return "ei löydy";
+        return null;
     }
 
     public static String palautaKaupunki (String asemaKoodi) {
@@ -93,7 +93,7 @@ public class Asemat {
             }
         }
 */
-        return "ei vastaavuutta";
+        return null;
     }
 
     public static double palautaKoordinaatit (String asemaKaupunki) {

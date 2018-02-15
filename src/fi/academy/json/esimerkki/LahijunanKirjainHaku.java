@@ -12,6 +12,8 @@ package fi.academy.json.esimerkki;
 
 public class LahijunanKirjainHaku {
 
+    private static StringBuilder kokosatsi = new StringBuilder();
+
     //haetaan junat listaksi JSON datasta - Olli
     private static List<Juna> lueJunanJSONData() {
 
@@ -30,58 +32,77 @@ public class LahijunanKirjainHaku {
 
     }
 
-    //Käydään läpi junalista ja poimitaan käyttäjän valitseman tunnuksen mukaiset. If ehdossa oleva metodi: "tuleva" rajaa
-    // osumat tällä hetkellä ajossa oleviin ja tulevaisuudessa lähteviin. -Olli
+    //Käydään läpi junalista ja poimitaan käyttäjän valitseman tunnuksen mukaiset junat. If ehdossa oleva metodi: "tuleva" rajaa
+    // osumat tällä hetkellä ajossa oleviin ja tulevaisuudessa lähteviin. Käytetään Paulan Stringbuilder metodia, jolla
+    //saadaan ulos samaa muotoa oleva tulostus. -Olli
     public static void haeJuna(String lahijunaKirjain) {
 
         int k = 0;
 
         List<Juna> junat = lueJunanJSONData();
+        String asema = "";
+        String aika;
+        String aikaTaulunAika;
+        String toteutunutAika;
 
 
         for (int i = 0; i < junat.size(); i++) {
             if (junat.get(i).getCommuterLineID().equals(lahijunaKirjain)
                     && tuleva(junat, i)) {
 
-                //rajaa tulosteen kymmeneen aikatauluun -Olli
+                //tulostelaskuri, joka rajaa tulosteen kymmeneen aikatauluun -Olli
                 if (k == 10) {
                     break;
-                    }
+                }
                 k++;
+
 
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.println("");
                 System.out.println(k + ". " + lahijunaKirjain + "-junan aikataulu: \n");
                 for (int j = 0; j < lista.size(); j++) {
                     if (lista.get(j).isTrainStopping())
-                        if (j % 2 == 0) {
-                            System.out.print(Asemat.palautaKaupunki(lista.get(j).getStationShortCode()) + " " + lista.get(j).haeKellonAikaStringina() + "  -  ");
+
+                        if (j == 0 || j % 2 == 0) {
+                            asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                            aika = lista.get(j).haeKellonAikaStringina();
+                            TietynJunanKulku.muotoileParillinen(asema, aika);
                         } else {
-                            System.out.println(lista.get(j).haeKellonAikaStringina() + " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+                            asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                            aika = lista.get(j).haeKellonAikaStringina();
+                            TietynJunanKulku.muotoilePariton(aika, asema);
                         }
+
+
                 }
+            //Stringbuilderin sisällön tulostus ja tyhjennys seuraavan junan aikatauluja varten
+            System.out.println(TietynJunanKulku.kokosatsi.toString());
+            TietynJunanKulku.kokosatsi = new StringBuilder();
+
             }
 
         }
 
-        if (k == 0){
-            System.out.println("");
-            System.out.println("Valitsemallasi hakuehdolla ei löytynyt aikatauluja.");
-        }
 
+
+        //tyhjän haun palauttama teksti -Olli
+        if (k == 0) {
+                System.out.println("");
+                System.out.println("Valitsemallasi hakuehdolla ei löytynyt aikatauluja.");
+        }
     }
 
     //Metodi, joka tarkistaa, että haetun junan scheduled time on ajanhetkeä vastaava. -Olli
-    private static boolean tuleva(List<Juna> junat, int i) {
-        for (int j = 0; j < junat.get(i).timeTableRows.size();j++) {
-            if (junat.get(i).timeTableRows.get(j).getScheduledTime().after(new Date())) {
-                return true;
-            } else {
-                continue;
+    public static boolean tuleva (List < Juna > junat,int i){
+            for (int j = 0; j < junat.get(i).timeTableRows.size(); j++) {
+                if (junat.get(i).timeTableRows.get(j).getScheduledTime().after(new Date())) {
+                    return true;
+                } else {
+                    continue;
+                }
             }
-        }
-        return false;
+    return false;
     }
-
 }
+
 
