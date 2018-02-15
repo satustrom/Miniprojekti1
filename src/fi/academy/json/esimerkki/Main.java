@@ -36,11 +36,13 @@ public class Main {
                     System.out.println("");
                     System.out.println("Syötä lähtöasema:");
                     String lahtoAsema = lukija.nextLine();
+                    String korjattuLahto = IsoAlkuKirjain.alkukirjainMuotoilu(lahtoAsema);
                     System.out.println("Syötä määräasema:");
                     String maaraAsema = lukija.nextLine();
+                    String korjattuMaara = IsoAlkuKirjain.alkukirjainMuotoilu(maaraAsema);
                     System.out.println("");
-                    System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + lahtoAsema + ", määräasema: " + maaraAsema + ".");
-                    SeuraavaJuna.kahdenKaupunginVali(lahtoAsema, maaraAsema);
+                    System.out.println("Kiitos. Haetaan seuraavaa junaa hakuehdoin lähtöasema: " + korjattuLahto + ", määräasema: " + korjattuMaara + ".");
+                    SeuraavaJuna.kahdenKaupunginVali(korjattuLahto,korjattuMaara);
 
 
                     // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
@@ -84,17 +86,20 @@ public class Main {
                     System.out.println("Lähtevien junien haku aseman perusteella:");
                     System.out.println("Syötä lähtöasema:");
                     String lahtevienJunienAsema = lukija.nextLine();
-                    System.out.println("\nKiitos. Haetaan 5 lähtevää junaa paikasta " + lahtevienJunienAsema + ".");
-                    SeuraavaJuna.tietyltaAsemalta(lahtevienJunienAsema);
+                    String korjattuLahtevat = IsoAlkuKirjain.alkukirjainMuotoilu(lahtevienJunienAsema);
+                    System.out.println("\nKiitos. Haetaan 5 lähtevää junaa paikasta " + korjattuLahtevat + ".");
+                    SeuraavaJuna.tietyltaAsemalta(korjattuLahtevat);
 
                 } else if(hakuvalinta == 5) {
                     System.out.println("Liikkeellä olevat junat:\n");
                     System.out.println("Syötä lähtöasema: ");
                     String lahteva = lukija.nextLine();
+                    String korjattuLahteva = IsoAlkuKirjain.alkukirjainMuotoilu(lahteva);
                     System.out.println("Syötä määräasema:");
                     String maara = lukija.nextLine();
-                    System.out.println("\n");
-                    JunatLiikkeella.liikkeella(lahteva, maara);
+                    String korjattuMaara = IsoAlkuKirjain.alkukirjainMuotoilu(maara);
+                    System.out.println("\nKiitos. Haetaan junia välillä: "+ korjattuLahteva+ " - " + korjattuMaara+ "\n");
+                    JunatLiikkeella.liikkeella(korjattuLahteva,korjattuMaara);
 
                     // Lopettaa ohjelman -Olli
                 } else if (hakuvalinta == 6) {
