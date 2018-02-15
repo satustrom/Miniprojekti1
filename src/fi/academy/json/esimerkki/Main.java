@@ -29,6 +29,7 @@ public class Main {
                 System.out.println("6: Sulje ohjelma");
                 System.out.println("Vastaus:");
                 int hakuvalinta = Integer.parseInt(lukija.nextLine());
+                System.out.println("-------------------------------------");
 
                 // Antaa käyttäjältä hakumetodille: String lahtoasema ja String maaraesema -Olli
                 if (hakuvalinta == 2) {
@@ -48,8 +49,7 @@ public class Main {
                     // Antaa käyttäjältä hakumetodille: int junaNumero -Olli
                 } else if (hakuvalinta == 1)
                     try {
-                        System.out.println("Informaatio tietystä junasta\n");
-                        System.out.println("Syötä junan numero:");
+                        System.out.println("Syötä vielä junan numero:");
                         int junaNumero = Integer.parseInt(lukija.nextLine());
                         System.out.println("\nValitse seuraavista, mitä informaatiota haluat saada: \n");
                         System.out.println("1: Perustiedot junasta");
@@ -63,10 +63,13 @@ public class Main {
                             TietynJunanKulku.haeJuna(junaNumero);
                         }
                         if(vastaus == 2 ) {
-                            System.out.println("Valitsit junan koordinaatit. Haetaan junaa numerolla" + junaNumero+ ".\n");
+                            System.out.println("Valitsit junan koordinaatit. Haetaan junaa numerolla " + junaNumero+ ".\n");
+                            Sijainti.haeJunanKoordinaatit(junaNumero);
                         }
                         if(vastaus == 3) {
-                            System.out.println("Valitsit etsiä junan lähellä olevia asemia. Haetaan junaa numerolla" + junaNumero + ".\n");
+                            System.out.println("Valitsit etsiä junan lähellä olevia asemia. Haetaan junaa numerolla " + junaNumero + ".\n");
+                            String uusiJunaNumero = Integer.toString(junaNumero);
+                            KulkutietoViestit.haeAsema(uusiJunaNumero);
                         }
 
                     } catch (java.lang.NumberFormatException ex) {
@@ -83,7 +86,7 @@ public class Main {
 
                     // Antaa käyttäjältä hakumetodille: String lahtevienJunienAsema -Olli
                 } else if (hakuvalinta == 3) {
-                    System.out.println("Lähtevien junien haku aseman perusteella:");
+                    System.out.println("Lähtevien junien haku aseman perusteella.");
                     System.out.println("Syötä lähtöasema:");
                     String lahtevienJunienAsema = lukija.nextLine();
                     String korjattuLahtevat = IsoAlkuKirjain.alkukirjainMuotoilu(lahtevienJunienAsema);
@@ -113,7 +116,8 @@ public class Main {
             } catch (java.lang.NumberFormatException ex) {
                 System.out.println("Valintaasi ei löytynyt.\n");
             }
-            System.out.println("\nHaku päättynyt. Haluatko palata Päävalikkoon?");
+            System.out.println("\n------------------------------------------");
+            System.out.println("Haku päättynyt. Haluatko palata Päävalikkoon?");
             System.out.println("1: Kyllä, kiitos");
             System.out.println("2: Ei, tämä riittää");
             System.out.println("Vastaus:");
