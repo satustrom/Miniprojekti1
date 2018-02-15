@@ -3,6 +3,8 @@ package fi.academy.json.esimerkki;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Time;
@@ -65,7 +67,7 @@ public class SeuraavaJuna {
     }
 
 
-    public static void tietyltaAsemalta(String lahtoasema) {
+    public static void tietyltaAsemalta(String lahtoasema) throws IOException {
 
 //Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
         String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
@@ -75,10 +77,15 @@ public class SeuraavaJuna {
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         String hakuehdot = "?arrived_trains=0&arriving_trains=0&departed_trains=0&departing_trains=5&include_nonstopping=false";
 
-        try {
+
 //Syötetään hakuehdot URLiin
-            URL url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + hakuehdot).toASCIIString());
-            ObjectMapper mapper = new ObjectMapper();
+        URL url = null;
+        try {
+            url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + hakuehdot).toASCIIString());
+        } catch (MalformedURLException e) {
+            System.out.println("Syötä kunnollinen aseman nimi");
+        }
+        ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
            // System.out.println("Haetaan 5 seuraavaksi lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
@@ -124,9 +131,6 @@ public class SeuraavaJuna {
                     System.out.println("-------------------------------------------");
                 }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println(ex);
-        }
+
     }
 }
