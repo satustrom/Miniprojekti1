@@ -13,23 +13,32 @@ public class KulkutietoViestit {
     // Tieto perustuu kulkutietoviesteihin, datan laatu ei aina ole optimaalista joten asemia voi välillä puuttua.
     //-Paula-
 
+    public static void main(String[] args) {
+        haeAsema("27");
+    }
+
     public static void haeAsema(String junaNumero) {
         List<KulkutietoJuna> junat = lueJunanJSONData();
         boolean loytyiko = false;
         for (int i = 0; i < junat.size(); i++) {
             if (junat.get(i).getTrainNumber().equals(junaNumero)) {
                 KulkutietoJuna haettava = junat.get(i);
+
                 String edellinenAsema= haettava.getNextStation();
                 if(haettava.getNextStation()==null){
                     edellinenAsema=("Asemaa ei valitettavasti löydy.");
+                } else {
+                    edellinenAsema=Asemat.palautaKaupunki(edellinenAsema);
                 }
                 String seuraavaAsema= haettava.getPreviousStation();
                 if(haettava.getPreviousStation()==null){
                     seuraavaAsema=("Asemaa ei valitettavasti löydy.");
+                } else {
+                    seuraavaAsema=Asemat.palautaKaupunki(seuraavaAsema);
                 }
                 System.out.println("Juna "+ junaNumero + ":\n");
-                System.out.println("Edellinen asema: " + Asemat.palautaKaupunki(edellinenAsema));
-                System.out.println("Seuraava asema: " + Asemat.palautaKaupunki(seuraavaAsema));
+                System.out.println("Edellinen asema: " + edellinenAsema);
+                System.out.println("Seuraava asema: " + seuraavaAsema);
 
                 loytyiko=true;
                 break;
