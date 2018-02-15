@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 public class Asemat {
 
     private static List<Asematieto> kaikkiAsemat;
+    private static List<Asematieto> henkiloAsemat;
     //täällä tulostetaan asemakaupunkeja
     //voit kutsua tätä siältöä mainissa: Asemat.asemaData();
     public static void asemaData() {
@@ -29,7 +30,7 @@ public class Asemat {
             kaikkiAsemat = mapper.readValue(url, tarkempiListanTyyppi);
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
-            List<Asematieto> henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
+            henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
            // for(Asematieto asematieto : henkiloAsemat)
              // System.out.println(asematieto.getStationName());
 
@@ -63,15 +64,34 @@ public class Asemat {
     }
 
     public static String palautaKaupunki (String asemaKoodi) {
-        if (kaikkiAsemat == null)
+        if (henkiloAsemat == null)
             asemaData();
 
-        for (int i = 0; i < kaikkiAsemat.size(); i++) {
-            if (asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
-                return kaikkiAsemat.get(i).getStationName();
+        for (int i = 0; i < henkiloAsemat.size(); i++) {
+            if (asemaKoodi.equalsIgnoreCase(henkiloAsemat.get(i).getStationShortCode())) {
+                return henkiloAsemat.get(i).getStationName();
+            }
+        }
+
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (int i = 0; i < kaikkiAsemat.size() ; i++) {
+            if(asemaKoodi.equalsIgnoreCase(kaikkiAsemat.get(i).getStationShortCode())) {
+                return kaikkiAsemat.get(i).getStationName() + " (ei matkustusliikenteen käytössä)";
             }
         }
         return null;
+    }
+
+    public static double palautaKoordinaatit (String asemaKaupunki) {
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (Asematieto tiedot : kaikkiAsemat) {
+            if(tiedot.getStationName().startsWith(asemaKaupunki)) {
+                return tiedot.getLatitude() + tiedot.getLongitude();
+            }
+        }
+        return 0;
     }
 }
 
