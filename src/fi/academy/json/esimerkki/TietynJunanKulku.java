@@ -9,11 +9,7 @@ import java.util.List;
 
 public class TietynJunanKulku {
 
-    public static void main(String[] args) {
-        //JunatLiikkeella.liikkeella();
-        haeJuna(274);
-    }
-
+    private static StringBuilder kokosatsi = new StringBuilder();
 
     //metodi joka hakee avointa dataa, luo ja palauttaa listan Junia -Paula-
     private static List<Juna> lueJunanJSONData() {
@@ -28,7 +24,6 @@ public class TietynJunanKulku {
 
         } catch (Exception ex) {
             System.out.println(ex);
-
         }
         return null;
     }
@@ -52,37 +47,38 @@ public class TietynJunanKulku {
                 System.out.println("Hakemasi junan " + junaNumero+ " matkatiedot: \n \nLähtöpäivä: \t" + lista.get(0).haePVMStringina() + "\n");
                 if (!haettava.isRunningCurrently()){
                     for (int j = 0; j < lista.size(); j++) {
-                        if (lista.get(j).isTrainStopping())
+                        if (lista.get(j).isCommercialStop() && lista.get(j).isTrainStopping())
                             if (j==0 || j%2==0){
                                 asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
                                 aika = lista.get(j).haeKellonAikaStringina();
-                                tulostaParillinen(asema, aika);
+                                muotoileParillinen(asema, aika);
                             } else {
                                 asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
                                 aika = lista.get(j).haeKellonAikaStringina();
-                                tulostaPariton(aika, asema);
-                            }
-
+                                muotoilePariton(aika, asema);
+                        }
                     }
                 } else {
                     for (int j = 0; j <lista.size() ; j++) {
-                        if (lista.get(j).isTrainStopping()){
+                        if (lista.get(j).isCommercialStop() && lista.get(j).isTrainStopping()){
                             asema= Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
                             aikaTaulunAika= lista.get(j).haeAikataulunAika();
                             toteutunutAika = lista.get(j).haeToteutunutAika();
-                            tulostaKulussaOleva(asema, aikaTaulunAika, toteutunutAika);
+                            muotoileKulussaOleva(asema, aikaTaulunAika, toteutunutAika);
                         }
-
                     }
-
                 }
-
             }
         }
-
+        if (kokosatsi.length() > 0) {
+            System.out.println(kokosatsi.toString());
+        } else {
+            System.out.println("Hakemaasi junaa ei löytynyt aikatauluista.");
+        }
     }
 
-    private static void tulostaKulussaOleva(String asema, String aikaTaulunAika, String toteutunutAika) {
+    //Tulostuksien muotoilua StringBuildereilla -Paula
+    private static void muotoileKulussaOleva(String asema, String aikaTaulunAika, String toteutunutAika) {
         StringBuilder muotoiltu = new StringBuilder();
         String a = asema;
         String b = aikaTaulunAika;
@@ -92,14 +88,14 @@ public class TietynJunanKulku {
             for (int i = 0; i <(20-(a.length())); i++) {
                 muotoiltu.append(" ");
             }
-            muotoiltu.append(b);
+            muotoiltu.append(b + "\t");
         }
-        muotoiltu.append("\t" + c);
-        System.out.println(muotoiltu);
+        muotoiltu.append(c);
+        kokosatsi.append(muotoiltu+ "\n");
 
     }
 
-    private static void tulostaParillinen (String asema, String aika) {
+    private static void muotoileParillinen(String asema, String aika) {
         StringBuilder muotoiltu = new StringBuilder();
         muotoiltu.append(asema);
         if (asema.length()<20){
@@ -108,28 +104,15 @@ public class TietynJunanKulku {
             }
             muotoiltu.append(aika);
         }
-        System.out.print(muotoiltu);
-
+        kokosatsi.append(muotoiltu);
     }
 
-    public static void tulostaPariton(String aika, String asema) {
+    public static void muotoilePariton(String aika, String asema) {
         StringBuilder muotoiltu = new StringBuilder();
-        muotoiltu.append(" - " + aika);
-        muotoiltu.append("\t " + asema);
-        System.out.println(muotoiltu);
-
-    }
-
-
-    private static void tulostaEka(String asema, String aika) {
-        StringBuilder muotoiltu= new StringBuilder();
+        muotoiltu.append(" - " + aika + "\t " );
         muotoiltu.append(asema);
-        if (aika.length()<20){
-            for (int i = 0; i <(20-(asema.length())); i++) {
-                muotoiltu.append(" ");
-            }
-            muotoiltu.append(aika);
-        }
-        System.out.println(muotoiltu);
+        kokosatsi.append(muotoiltu + "\n");
+
     }
+
 }
