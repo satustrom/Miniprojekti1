@@ -13,10 +13,6 @@ public class KulkutietoViestit {
     // Tieto perustuu kulkutietoviesteihin, datan laatu ei aina ole optimaalista joten asemia voi välillä puuttua.
     //-Paula-
 
-    public static void main(String[] args) {
-        haeAsema("27");
-    }
-
     public static void haeAsema(String junaNumero) {
         List<KulkutietoJuna> junat = lueJunanJSONData();
         boolean loytyiko = false;
