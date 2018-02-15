@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.sql.Time;
+import java.util.*;
 
 public class SeuraavaJuna {
-
 
     public static void kahdenKaupunginVali(String lahtoasema, String maaraasema) {
 
@@ -71,7 +69,8 @@ public class SeuraavaJuna {
 
 //Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
         String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
-
+        List<TimeTableRow> lista;
+        List<Juna> junat;
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
         String hakuehdot = "?arrived_trains=0&arriving_trains=0&departed_trains=0&departing_trains=5&include_nonstopping=false";
@@ -81,22 +80,53 @@ public class SeuraavaJuna {
             URL url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + hakuehdot).toASCIIString());
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
-            List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
-            System.out.println("Haetaan 5 lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
+            junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+           // System.out.println("Haetaan 5 seuraavaksi lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
+
+            Collections.sort(junat, (eka, toka) -> {
+                Date ekaaika = null, tokaaika = null;
+                for(TimeTableRow rivi : eka.getTimeTableRows() ) {
+                    if(rivi.getStationShortCode().equals(lAsema)) {
+                        ekaaika = rivi.getScheduledTime();
+                        break;
+                    }
+                }
+                for(TimeTableRow rivi : toka.getTimeTableRows() ) {
+                    if(rivi.getStationShortCode().equals(lAsema)) {
+                        tokaaika = rivi.getScheduledTime();
+                        break;
+                    }
+                }
+                if(ekaaika.equals(tokaaika)) return 0;
+                return ekaaika.after(tokaaika)?1:-1;
+            });
 // Tulostetaan junat
+            System.out.println("-------------------------------------------");
             for (int i = 0; i < junat.size(); i++) {
-                List<TimeTableRow> lista = junat.get(i).timeTableRows;
+                lista = junat.get(i).timeTableRows;
+                TimeTableRow lAsemanRivi = null;
+                for(TimeTableRow rivi : lista) {
+                    if(rivi.getStationShortCode().equals(lAsema) && rivi.getType().equals("DEPARTURE")) {
+                        lAsemanRivi = rivi;
+                        break;
+                    }
+                }
+                System.out.println((i+1) + ".");
+                //Collections.sort(lista, new Junavertailija());
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Määränpää: %s\n"
                         , junat.get(i).getCommuterLineID()
                         , junat.get(i).getTrainNumber()
-                        , lista.get(i).haeAikaStringina()
+                        , lAsemanRivi.haeAikaStringina()
                         , Asemat.palautaKaupunki(lista.get(lista.size()-1).getStationShortCode()));
-                System.out.println("----------------------------------------");
+                System.out.println("-------------------------------------------");
+                if(junat.size()<5) {
+                    System.out.println("Valitettavasti tänään ei lähde enempää junia.");
+                    System.out.println("-------------------------------------------");
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex);
         }
     }
-
 }

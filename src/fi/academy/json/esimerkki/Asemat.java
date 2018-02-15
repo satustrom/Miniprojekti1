@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Asemat {
 
     private static List<Asematieto> kaikkiAsemat;
     private static List<Asematieto> henkiloAsemat;
+    private static List<Asematieto> kaupungit;
     //täällä tulostetaan asemakaupunkeja
     //voit kutsua tätä siältöä mainissa: Asemat.asemaData();
     public static void asemaData() {
@@ -31,6 +31,16 @@ public class Asemat {
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
             henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
+
+            kaupungit = new ArrayList<>(kaikkiAsemat);
+            kaupungit
+                    .stream()
+                    .forEach(s->{
+                        if (s.getStationName().endsWith(" asema"))
+                                    s.setStationName(s.getStationName().substring(0,s.getStationName().lastIndexOf(" asema")));
+                        });
+                    //.collect(Collectors.toList());
+
            // for(Asematieto asematieto : henkiloAsemat)
              // System.out.println(asematieto.getStationName());
 
@@ -60,19 +70,21 @@ public class Asemat {
                 return tieto.getStationShortCode();
             }
         }
-        return null;
+        return "ei löydy";
     }
 
     public static String palautaKaupunki (String asemaKoodi) {
-        if (henkiloAsemat == null)
+        if (kaupungit == null)
             asemaData();
 
-        for (int i = 0; i < henkiloAsemat.size(); i++) {
-            if (asemaKoodi.equalsIgnoreCase(henkiloAsemat.get(i).getStationShortCode())) {
-                return henkiloAsemat.get(i).getStationName();
-            }
+        for (int i = 0; i < kaupungit.size(); i++) {
+            if (kaupungit.get(i).isPassengerTraffic() && asemaKoodi.equalsIgnoreCase(kaupungit.get(i).getStationShortCode()))
+                return kaupungit.get(i).getStationName();
+            else if (asemaKoodi.equalsIgnoreCase(kaupungit.get(i).getStationShortCode()))
+                return kaupungit.get(i).getStationName() + " (ei matkustusliikenteen käytössä)";
         }
 
+/*
         if (kaikkiAsemat == null)
             asemaData();
         for (int i = 0; i < kaikkiAsemat.size() ; i++) {
@@ -80,7 +92,8 @@ public class Asemat {
                 return kaikkiAsemat.get(i).getStationName() + " (ei matkustusliikenteen käytössä)";
             }
         }
-        return null;
+*/
+        return "ei vastaavuutta";
     }
 
     public static double palautaKoordinaatit (String asemaKaupunki) {
