@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class JunatLiikkeella {
-    public static void liikkeella(String lahtoasema, String maaraasema) throws IOException {
+    public static void liikkeella(String lahtoasema, String maaraasema) {
 
 
 //Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
@@ -25,18 +25,27 @@ public class JunatLiikkeella {
 
 
 //Syötetään hakuehdot URLiin
-            URL url = new URL(baseurl + "/live-trains/station/" + lAsema + "/" + kAsema + "" + hakuehdot);
-            ObjectMapper mapper = new ObjectMapper();
-            CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
-            List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);
+        URL url = null;
+        try {
+            url = new URL(baseurl + "/live-trains/station/" + lAsema + "/" + kAsema + "" + hakuehdot);
+        } catch (MalformedURLException e) {
+            System.out.println("Virheellinen URL-haku");
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
+        List<Juna> junat = null;
+        try {
+            junat = mapper.readValue(url, tarkempiListanTyyppi);
+        } catch (IOException e) {
+            System.out.println("Junat listassa virhe");
+        }
 
-            System.out.println("Tulostetaan junat välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
+        System.out.println("Tulostetaan junat välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
 
-
-
+        int printatut = 0;
         for (int i = 0; i < junat.size(); i++) {
-            System.out.println(junat.get(i).isRunningCurrently());
-           if (junat.get(i).isRunningCurrently()) {
+
+            if (junat.get(i).isRunningCurrently()) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Asemalta: %s\n\t Juuri nyt: %s\n\t Määränpää: %s\n"
                         , junat.get(i).getCommuterLineID()
@@ -44,19 +53,27 @@ public class JunatLiikkeella {
                         , lista.get(i).haeAikaStringina()
                         , Asemat.palautaKaupunki(lista.get(0).getStationShortCode())
                         , Asemat.palautaKaupunki(lista.get(i).getStationShortCode())
-                        , Asemat.palautaKaupunki(lista.get(lista.size()-1).getStationShortCode()));
-            System.out.println("-------------------------------------");
+                        , Asemat.palautaKaupunki(lista.get(lista.size() - 1).getStationShortCode()));
+                System.out.println("-------------------------------------");
+                printatut += 1;
 
 
+            } else if (printatut == 0) {
+                System.out.println("-------------------------------------");
+                System.out.println("Valitettavasti VR lakkoilee joten yhtään junaa ei ole ajossa.");
+                break;
             }
+
         }
-
-
     }
 
-
-    public static void main(String[] args) throws IOException {
-        liikkeella("Helsinki", "Pasila");
+    public static void main(String[] args) {
+        liikkeella("Helsinki", "Leppävaara");
     }
-
 }
+/*      System.out.println("                     _   _   _   _  _     ___    _____    ____     __      __      __");
+        System.out.println("          o O O   _ | | | | | | | \| |   /   \  |_   _|  |__ /    /  \    /  \    /  \'");
+        System.out.println("         o       | || | | |_| | | .` |   | - |    | |     |_ \   | () |  | () |  | () |");
+        System.out.println("        TS__[O]  _\__/   \___/  |_|\_|   |_|_|   _|_|_   |___/   _\__/   _\__/   _\__/");
+        System.out.println("        {======|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|");
+        System.out.println("        ./o--000'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'");*/
