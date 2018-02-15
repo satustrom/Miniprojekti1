@@ -12,8 +12,6 @@ package fi.academy.json.esimerkki;
 
 public class LahijunanKirjainHaku {
 
-    private static StringBuilder kokosatsi = new StringBuilder();
-
     //haetaan junat listaksi JSON datasta - Olli
     private static List<Juna> lueJunanJSONData() {
 
@@ -42,15 +40,12 @@ public class LahijunanKirjainHaku {
         List<Juna> junat = lueJunanJSONData();
         String asema = "";
         String aika;
-        String aikaTaulunAika;
-        String toteutunutAika;
-
 
         for (int i = 0; i < junat.size(); i++) {
             if (junat.get(i).getCommuterLineID().equals(lahijunaKirjain)
                     && tuleva(junat, i)) {
 
-                //tulostelaskuri, joka rajaa tulosteen kymmeneen aikatauluun -Olli
+                //laskuri, joka keskeyttää haun kymmenen ensimmäisen aikataulun löytymisen jälkeen -Olli
                 if (k == 10) {
                     break;
                 }
