@@ -9,6 +9,10 @@ import java.util.List;
 
 public class TietynJunanKulku {
 
+    //Tämän luokan avulla voit etsiä junanumeron perusteella tiedot tietyn junan kulusta: junan asemat ja aikataulun
+    //-Paula-
+
+    //Tulostuksen muotoiluun:
     public static StringBuilder kokosatsi = new StringBuilder();
 
     //metodi joka hakee avointa dataa, luo ja palauttaa listan Junia -Paula-
