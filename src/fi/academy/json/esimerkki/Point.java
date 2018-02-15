@@ -6,6 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Point {
 
+    //Tämän luokan avulla saadaan purettua GeoJson-dataa joka on tyyppiä Point
+    //Luokka on luotu postgis Point luokkaa pohjana käyttäen, mutta luotu omana luokkana
+    //jotta vältytään ylimääräiseltä kirjastojen käyttöönotolta
+    //-Paula-
+
     private String type;
     private double x;
     private double y;
