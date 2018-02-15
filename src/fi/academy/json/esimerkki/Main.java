@@ -25,6 +25,7 @@ public class Main {
                 System.out.println("3: Lähtöaseman perusteella lähtevien junien listaus");
                 System.out.println("4: Aikataulut lähijunista");
                 System.out.println("9: Sulje ohjelma");
+                System.out.println("Vastaus:");
                 int hakuvalinta = Integer.parseInt(lukija.nextLine());
 
                 // Antaa käyttäjältä hakumetodille: String lahtoasema ja String maaraesema -Olli
@@ -49,10 +50,10 @@ public class Main {
                         System.out.println("Syötä junan numero:");
                         int junaNumero = Integer.parseInt(lukija.nextLine());
                         System.out.println("");
-                        System.out.println("Kiitos. Haetaan junaa numerolla " + junaNumero + ".");
+                        System.out.println("Kiitos. Haetaan junaa numerolla " + junaNumero + ".\n");
                         TietynJunanKulku.haeJuna(junaNumero);
                     } catch (java.lang.NumberFormatException ex) {
-                        System.out.println("Syötettävän tiedon tulee olla numero, palataan päävalikkoon.");
+                        System.out.println("Syötettävän tiedon tulee olla numero, palataan päävalikkoon.\n");
 
                     }
                 else if (hakuvalinta == 4) {
@@ -84,9 +85,10 @@ public class Main {
             } catch (java.lang.NumberFormatException ex) {
                 System.out.println("Valintaasi ei löytynyt.\n");
             }
-            System.out.println("Haluatko palata Päävalikkoon?");
+            System.out.println("\nHaku päättynyt. Haluatko palata Päävalikkoon?");
             System.out.println("1: Kyllä, kiitos");
             System.out.println("2: Ei, tämä riittää");
+            System.out.println("Vastaus:");
             int vastaus = Integer.parseInt(lukija.nextLine());
             if (vastaus == 1) {
                 continue;
