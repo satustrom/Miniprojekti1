@@ -5,14 +5,13 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TietynJunanKulku {
 
     public static void main(String[] args) {
         //JunatLiikkeella.liikkeella();
-        haeJuna(5);
+        haeJuna(274);
     }
 
 
@@ -40,6 +39,10 @@ public class TietynJunanKulku {
     public static void haeJuna(int junaNumero) {
 
         List<Juna> junat = lueJunanJSONData();
+        String asema = "";
+        String aika;
+        String aikaTaulunAika;
+        String toteutunutAika;
 
 
         for (int i = 0; i < junat.size(); i++) {
@@ -50,16 +53,24 @@ public class TietynJunanKulku {
                 if (!haettava.isRunningCurrently()){
                     for (int j = 0; j < lista.size(); j++) {
                         if (lista.get(j).isTrainStopping())
-                            if (j%2==0){
-                                System.out.print(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ " "+ lista.get(j).haeKellonAikaStringina() + "  -  ");
+                            if (j==0 || j%2==0){
+                                asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                                aika = lista.get(j).haeKellonAikaStringina();
+                                tulostaParillinen(asema, aika);
                             } else {
-                                System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
+                                asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                                aika = lista.get(j).haeKellonAikaStringina();
+                                tulostaPariton(aika, asema);
                             }
+
                     }
                 } else {
                     for (int j = 0; j <lista.size() ; j++) {
                         if (lista.get(j).isTrainStopping()){
-                            System.out.println(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ ", "+ lista.get(j).haeAikataulunAika() + ", " + lista.get(j).haeToteutunutAika());
+                            asema= Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                            aikaTaulunAika= lista.get(j).haeAikataulunAika();
+                            toteutunutAika = lista.get(j).haeToteutunutAika();
+                            tulostaKulussaOleva(asema, aikaTaulunAika, toteutunutAika);
                         }
 
                     }
@@ -70,18 +81,55 @@ public class TietynJunanKulku {
         }
 
     }
-    /* public static void tulosta () {
+
+    private static void tulostaKulussaOleva(String asema, String aikaTaulunAika, String toteutunutAika) {
         StringBuilder muotoiltu = new StringBuilder();
-        String s = "Helsinki asema 18:49";
-        String b = "18:54 Pasila asema";
-        muotoiltu.append(s);
-        if (s.length()<15){
-            muotoiltu.append("\t").append(b);
-        } else {
+        String a = asema;
+        String b = aikaTaulunAika;
+        String c = toteutunutAika;
+        muotoiltu.append(a);
+        if (a.length()<20){
+            for (int i = 0; i <(20-(a.length())); i++) {
+                muotoiltu.append(" ");
+            }
             muotoiltu.append(b);
         }
+        muotoiltu.append("\t" + c);
         System.out.println(muotoiltu);
 
-    } */
+    }
 
+    private static void tulostaParillinen (String asema, String aika) {
+        StringBuilder muotoiltu = new StringBuilder();
+        muotoiltu.append(asema);
+        if (asema.length()<20){
+            for (int i = 0; i <(20-(asema.length())); i++) {
+                muotoiltu.append(" ");
+            }
+            muotoiltu.append(aika);
+        }
+        System.out.print(muotoiltu);
+
+    }
+
+    public static void tulostaPariton(String aika, String asema) {
+        StringBuilder muotoiltu = new StringBuilder();
+        muotoiltu.append(" - " + aika);
+        muotoiltu.append("\t " + asema);
+        System.out.println(muotoiltu);
+
+    }
+
+
+    private static void tulostaEka(String asema, String aika) {
+        StringBuilder muotoiltu= new StringBuilder();
+        muotoiltu.append(asema);
+        if (aika.length()<20){
+            for (int i = 0; i <(20-(asema.length())); i++) {
+                muotoiltu.append(" ");
+            }
+            muotoiltu.append(aika);
+        }
+        System.out.println(muotoiltu);
+    }
 }

@@ -30,13 +30,10 @@ public class SeuraavaJuna {
 
             System.out.println("Seuraava juna välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
 
-
-
-
-
-
             int i = 0;
+// Luodaan timetablerow lista
             List<TimeTableRow> lista = junat.get(i).timeTableRows;
+// Luodaan apumuuttujat joilla saadaan aloitettua määrättyä minkä aseman aika tulostetaan ja miltä asemalta matka aloitetaan välipysäkkien tulostus
             int alkuID = 0;
             int loppuID = 0;
             for (int j = 0; j < lista.size(); j++) {
@@ -44,18 +41,17 @@ public class SeuraavaJuna {
                     alkuID = j;
                 if (lista.get(j).getStationShortCode().equals(kAsema)) {
                     loppuID = j;
-
                     continue;
                 }
-
             }
+// Tulostetaan Junan tiedot
             System.out.println("----------------------------------------");
             System.out.printf("Juna %s - %s \n\t Lähtee: %s\n"
                     , junat.get(i).getCommuterLineID()
                     , junat.get(i).getTrainNumber()
                     , lista.get(alkuID).haeAikaStringina());
 
-
+// Tulostetaan välipysäkit
             for (int j = alkuID; j <= loppuID; j++) {
                if (j%2==1) {
                    System.out.println("\t\t\t\t\t - " + lista.get(j).haeKellonAikaStringina() + " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
@@ -87,10 +83,9 @@ public class SeuraavaJuna {
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
             System.out.println("Haetaan 5 lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
-
+// Tulostetaan junat
             for (int i = 0; i < junat.size(); i++) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
-
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Määränpää: %s\n"
                         , junat.get(i).getCommuterLineID()
                         , junat.get(i).getTrainNumber()
