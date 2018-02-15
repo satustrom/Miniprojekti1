@@ -31,7 +31,7 @@ public class LahijunanKirjainHaku {
     }
 
     //Käydään läpi junalista ja poimitaan käyttäjän valitseman tunnuksen mukaiset. If ehdossa oleva metodi: "tuleva" rajaa
-    // osumat tähän ajanhetkeen.
+    // osumat tällä hetkellä ajossa oleviin ja tulevaisuudessa lähteviin. -Olli
     public static void haeJuna(String lahijunaKirjain) {
 
         int k = 0;
@@ -43,14 +43,15 @@ public class LahijunanKirjainHaku {
             if (junat.get(i).getCommuterLineID().equals(lahijunaKirjain)
                     && tuleva(junat, i)) {
 
-
+                //rajaa tulosteen kymmeneen aikatauluun -Olli
                 if (k == 10) {
                     break;
                     }
                 k++;
+
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.println("");
-                System.out.println("Hakemasi junan " + lahijunaKirjain + " matkatiedot: \n \nLähtöpäivä: \t" + lista.get(0).haePVMStringina() + "\n");
+                System.out.println(k + ". " + lahijunaKirjain + "-junan aikataulu: \n");
                 for (int j = 0; j < lista.size(); j++) {
                     if (lista.get(j).isTrainStopping())
                         if (j % 2 == 0) {
@@ -64,7 +65,7 @@ public class LahijunanKirjainHaku {
 
     }
 
-    //Metodi, joka tarkistaa, että haetun junan scheduled time on ajanhetkeä vastaava
+    //Metodi, joka tarkistaa, että haetun junan scheduled time on ajanhetkeä vastaava. -Olli
     private static boolean tuleva(List<Juna> junat, int i) {
         for (int j = 0; j < junat.get(i).timeTableRows.size();j++) {
             if (junat.get(i).timeTableRows.get(j).getScheduledTime().after(new Date())) {
