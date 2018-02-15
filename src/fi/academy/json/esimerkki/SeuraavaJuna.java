@@ -129,11 +129,4 @@ public class SeuraavaJuna {
             System.out.println(ex);
         }
     }
-
-    //@Override
-//    public int compareTo(SeuraavaJuna seuraavaJuna) {
-  //      for(int i = 0; i<junat.size(); i++) {
-    //        if (lista.get(i).haeAikaStringina().compareTo(lista.get(0).haeAikaStringina());
-      //  }return 0;
-    //}
 }
