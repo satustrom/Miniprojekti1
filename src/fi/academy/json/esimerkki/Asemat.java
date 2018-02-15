@@ -73,5 +73,16 @@ public class Asemat {
         }
         return null;
     }
+
+    public static double palautaKoordinaatit (String asemaKaupunki) {
+        if (kaikkiAsemat == null)
+            asemaData();
+        for (Asematieto tiedot : kaikkiAsemat) {
+            if(tiedot.getStationName().startsWith(asemaKaupunki)) {
+                return tiedot.getLatitude() + tiedot.getLongitude();
+            }
+        }
+        return 0;
+    }
 }
 
