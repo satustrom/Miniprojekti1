@@ -63,8 +63,16 @@ public class SeuraavaJuna {
             System.out.println("----------------------------------------");
 
 
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } catch (NullPointerException ex) {
+            System.out.println("Ei löytynyt");
+        } catch (JsonParseException e) {
+            System.out.println("Ei löytynyt");
+        } catch (JsonMappingException e) {
+            System.out.println("Ei löytynyt");
+        } catch (MalformedURLException e) {
+            System.out.println("Ei löytynyt");
+        } catch (IOException e) {
+            System.out.println("Ei löytynyt");
         }
     }
 

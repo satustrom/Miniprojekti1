@@ -2,6 +2,8 @@
 
 package fi.academy.json.esimerkki;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -36,8 +38,14 @@ public class JunatLiikkeella {
         List<Juna> junat = null;
         try {
             junat = mapper.readValue(url, tarkempiListanTyyppi);
-        } catch (IOException e) {
+        } catch (NullPointerException ex) {
             System.out.println("Junat listassa virhe");
+        } catch (JsonParseException e) {
+            System.out.println("Ei löytynyt");
+        } catch (JsonMappingException e) {
+            System.out.println("Ei löytynyt");
+        } catch (IOException e) {
+            System.out.println("Ei löytynyt");
         }
 
         System.out.println("Tulostetaan junat välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
@@ -45,7 +53,7 @@ public class JunatLiikkeella {
         int printatut = 0;
         for (int i = 0; i < junat.size(); i++) {
 
-            if (junat.get(i).isRunningCurrently()) {
+           if (junat.get(i).isRunningCurrently()) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Asemalta: %s\n\t Juuri nyt: %s\n\t Määränpää: %s\n"
                         , junat.get(i).getCommuterLineID()
@@ -65,11 +73,8 @@ public class JunatLiikkeella {
             }
 
         }
-    }
+   }
 
-    public static void main(String[] args) {
-        liikkeella("Helsinki", "Leppävaara");
-    }
 }
 /*      System.out.println("                     _   _   _   _  _     ___    _____    ____     __      __      __");
         System.out.println("          o O O   _ | | | | | | | \| |   /   \  |_   _|  |__ /    /  \    /  \    /  \'");
