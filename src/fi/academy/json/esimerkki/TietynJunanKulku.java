@@ -73,7 +73,7 @@ public class TietynJunanKulku {
         if (kokosatsi.length() > 0) {
             System.out.println(kokosatsi.toString());
         } else {
-            System.out.println("Hakemaasi junaa ei löytynyt aikatauluista.");
+            System.out.println("\n Hakemaasi junaa ei löytynyt aikatauluista.");
         }
     }
 
