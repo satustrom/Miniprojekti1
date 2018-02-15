@@ -15,4 +15,5 @@ public class IsoAlkuKirjain {
 
 }
 }
-//metodi, joka muuttaa sanan alkamaan isolla kirjaimella ja muuten jatkumaan pienellä -Olli
+//metodi, joka muuttaa sanan alkamaan isolla kirjaimella ja muuten jatkumaan pienellä.
+//toimii kirjoittamalla: IsoAlkuKirjain.alkukirjainMuotoilu(sana jonka haluat muuttaa) - Olli
