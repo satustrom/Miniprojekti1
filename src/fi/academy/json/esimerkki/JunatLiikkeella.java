@@ -45,17 +45,17 @@ public class JunatLiikkeella {
                 }
             }
 // Tulostetaan Junan tiedot
-            for (int l = alkuID; l < loppuID; l++) {
-                List<TimeTableRow> lista2 = junat.get(l).timeTableRows;
-           //    if (junat.get(i).isRunningCurrently()) {
+            for (i = alkuID; i < loppuID; i++) {
+            //    List<TimeTableRow> lista2 = junat.get(l).timeTableRows;
+             //  if (junat.get(i).isRunningCurrently()) {
                     System.out.println("----------------------------------------");
                     System.out.printf("Juna %s - %s \n\t Lähtenyt:\t %s\n\t Asemalta:\t %s\n\t Määränpää:\t %s\n\t Juuri nyt:\t %s\n"
-                            , junat.get(l).getCommuterLineID()
-                            , junat.get(l).getTrainNumber()
-                            , lista2.get(0).haeAikaStringina()
-                            , Asemat.palautaKaupunki(lista2.get(0).getStationShortCode())
-                            , Asemat.palautaKaupunki(lista2.get(lista2.size()-1).getStationShortCode())
-                            , Asemat.palautaKaupunki(lista2.get(l).getStationShortCode()));
+                            , junat.get(i).getCommuterLineID()
+                            , junat.get(i).getTrainNumber()
+                            , lista.get(0).haeAikaStringina()
+                            , Asemat.palautaKaupunki(lista.get(0).getStationShortCode())
+                            , Asemat.palautaKaupunki(lista.get(lista.size()-1).getStationShortCode())
+                            , Asemat.palautaKaupunki(lista.get(i).getStationShortCode()));
                     System.out.println("----------------------------------------");
           //  }
             }
