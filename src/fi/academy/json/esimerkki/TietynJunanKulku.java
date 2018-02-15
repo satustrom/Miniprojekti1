@@ -61,8 +61,7 @@ public class TietynJunanKulku {
                                 asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
                                 aika = lista.get(j).haeKellonAikaStringina();
                                 tulostaPariton(aika, asema);
-                            }
-
+                        }
                     }
                 } else {
                     for (int j = 0; j <lista.size() ; j++) {
@@ -72,16 +71,12 @@ public class TietynJunanKulku {
                             toteutunutAika = lista.get(j).haeToteutunutAika();
                             tulostaKulussaOleva(asema, aikaTaulunAika, toteutunutAika);
                         }
-
                     }
-
                 }
-
             }
         }
-
     }
-
+    //Tulostuksien muotoilua StringBuildereilla -Paula
     private static void tulostaKulussaOleva(String asema, String aikaTaulunAika, String toteutunutAika) {
         StringBuilder muotoiltu = new StringBuilder();
         String a = asema;
@@ -92,9 +87,9 @@ public class TietynJunanKulku {
             for (int i = 0; i <(20-(a.length())); i++) {
                 muotoiltu.append(" ");
             }
-            muotoiltu.append(b);
+            muotoiltu.append(b + "\t");
         }
-        muotoiltu.append("\t" + c);
+        muotoiltu.append(c);
         System.out.println(muotoiltu);
 
     }
@@ -114,22 +109,10 @@ public class TietynJunanKulku {
 
     public static void tulostaPariton(String aika, String asema) {
         StringBuilder muotoiltu = new StringBuilder();
-        muotoiltu.append(" - " + aika);
-        muotoiltu.append("\t " + asema);
-        System.out.println(muotoiltu);
-
-    }
-
-
-    private static void tulostaEka(String asema, String aika) {
-        StringBuilder muotoiltu= new StringBuilder();
+        muotoiltu.append(" - " + aika + "\t " );
         muotoiltu.append(asema);
-        if (aika.length()<20){
-            for (int i = 0; i <(20-(asema.length())); i++) {
-                muotoiltu.append(" ");
-            }
-            muotoiltu.append(aika);
-        }
         System.out.println(muotoiltu);
+
     }
+
 }
