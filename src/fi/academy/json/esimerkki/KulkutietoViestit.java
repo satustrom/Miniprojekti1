@@ -11,10 +11,7 @@ public class KulkutietoViestit {
 
     // Tällä metodilla voit hakea tietyn junan (huom: junaNumero String-muodossa) sijainnin edellisen ja seuraavan aseman perusteella.
     // Tieto perustuu kulkutietoviesteihin, datan laatu ei aina ole optimaalista joten asemia voi välillä puuttua.
-
-    public static void main(String[] args) {
-        haeAsema("55340");
-    }
+    //-Paula-
 
     public static void haeAsema(String junaNumero) {
         List<KulkutietoJuna> junat = lueJunanJSONData();

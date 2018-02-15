@@ -10,6 +10,10 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JunaGPS {
 
+    // Tämän luokan avulla saadaan luettua GeoJson-datasta Point-luokkaa apuna käyttäen junan koordinaatit
+    // ja GPS-sijaintiin liittyvä aikaleima
+    //-Paula-
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", locale = "UTC")
     private Date timestamp;
     private Point location;
@@ -29,7 +33,6 @@ public class JunaGPS {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
-
 
     public Point getLocation() {
         return location;
