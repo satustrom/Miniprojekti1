@@ -2,8 +2,8 @@ package fi.academy.json.esimerkki;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Comparator;
-
+//täältä Asemat-luokka hakee asemien varsinaiset tiedot.
+//-Satu
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asematieto {
 
@@ -80,14 +80,4 @@ public class Asematieto {
         this.latitude = latitude;
     }
 }
-
-/*Tämä luokka tehtiin aakkosjärjestystä varten, ei enää välttämättä tarpeellinen:
-class AsemaVertailija implements Comparator<Asematieto> {
-    @Override
-    public int compare (Asematieto asematieto1, Asematieto asematieto2) {
-        if(asematieto1.isPassengerTraffic()!=asematieto2.isPassengerTraffic())
-            return asematieto1.isPassengerTraffic() ?  -1 : 1;
-        return asematieto1.getStationName().compareTo(asematieto2.getStationName());
-    }
-}*/
 
