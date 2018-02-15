@@ -14,12 +14,7 @@ public class Sijainti {
     //sijainnin. GPS-datan tuotto kytkeytyy päälle ja pois veturin kuljettajan toimesta,
     // joten se ei ole aukottavan luotettavaa tai saatavilla jokaisesta junasta.
     //-Paula-
-
-    public static void main(String[] args) {
-        //JunatLiikkeella.liikkeella();
-        haeJunanKoordinaatit(12);
-    }
-
+    
     public static void haeJunanKoordinaatit (int junaNumero) {
         List<JunaGPS> junat = lueJunanJSONData();
         boolean loytyiko=false;
