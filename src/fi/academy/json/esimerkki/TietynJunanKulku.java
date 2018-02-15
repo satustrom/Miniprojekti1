@@ -5,16 +5,11 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TietynJunanKulku {
 
-    public static void main(String[] args) {
-        //JunatLiikkeella.liikkeella();
-        haeJuna(5);
-    }
-
+    private static StringBuilder kokosatsi = new StringBuilder();
 
     //metodi joka hakee avointa dataa, luo ja palauttaa listan Junia -Paula-
     private static List<Juna> lueJunanJSONData() {
@@ -29,7 +24,6 @@ public class TietynJunanKulku {
 
         } catch (Exception ex) {
             System.out.println(ex);
-
         }
         return null;
     }
@@ -40,6 +34,10 @@ public class TietynJunanKulku {
     public static void haeJuna(int junaNumero) {
 
         List<Juna> junat = lueJunanJSONData();
+        String asema = "";
+        String aika;
+        String aikaTaulunAika;
+        String toteutunutAika;
 
 
         for (int i = 0; i < junat.size(); i++) {
@@ -49,39 +47,72 @@ public class TietynJunanKulku {
                 System.out.println("Hakemasi junan " + junaNumero+ " matkatiedot: \n \nLähtöpäivä: \t" + lista.get(0).haePVMStringina() + "\n");
                 if (!haettava.isRunningCurrently()){
                     for (int j = 0; j < lista.size(); j++) {
-                        if (lista.get(j).isTrainStopping())
-                            if (j%2==0){
-                                System.out.print(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ " "+ lista.get(j).haeKellonAikaStringina() + "  -  ");
+                        if (lista.get(j).isCommercialStop() && lista.get(j).isTrainStopping())
+                            if (j==0 || j%2==0){
+                                asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                                aika = lista.get(j).haeKellonAikaStringina();
+                                muotoileParillinen(asema, aika);
                             } else {
-                                System.out.println(lista.get(j).haeKellonAikaStringina()+ " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
-                            }
+                                asema = Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                                aika = lista.get(j).haeKellonAikaStringina();
+                                muotoilePariton(aika, asema);
+                        }
                     }
                 } else {
                     for (int j = 0; j <lista.size() ; j++) {
-                        if (lista.get(j).isTrainStopping()){
-                            System.out.println(Asemat.palautaKaupunki(lista.get(j).getStationShortCode())+ ", "+ lista.get(j).haeAikataulunAika() + ", " + lista.get(j).haeToteutunutAika());
+                        if (lista.get(j).isCommercialStop() && lista.get(j).isTrainStopping()){
+                            asema= Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
+                            aikaTaulunAika= lista.get(j).haeAikataulunAika();
+                            toteutunutAika = lista.get(j).haeToteutunutAika();
+                            muotoileKulussaOleva(asema, aikaTaulunAika, toteutunutAika);
                         }
-
                     }
-
                 }
-
             }
         }
+        if (kokosatsi.length() > 0) {
+            System.out.println(kokosatsi.toString());
+        } else {
+            System.out.println("Hakemaasi junaa ei löytynyt aikatauluista.");
+        }
+    }
+
+    //Tulostuksien muotoilua StringBuildereilla -Paula
+    private static void muotoileKulussaOleva(String asema, String aikaTaulunAika, String toteutunutAika) {
+        StringBuilder muotoiltu = new StringBuilder();
+        String a = asema;
+        String b = aikaTaulunAika;
+        String c = toteutunutAika;
+        muotoiltu.append(a);
+        if (a.length()<20){
+            for (int i = 0; i <(20-(a.length())); i++) {
+                muotoiltu.append(" ");
+            }
+            muotoiltu.append(b + "\t");
+        }
+        muotoiltu.append(c);
+        kokosatsi.append(muotoiltu+ "\n");
 
     }
-    /* public static void tulosta () {
-        StringBuilder muotoiltu = new StringBuilder();
-        String s = "Helsinki asema 18:49";
-        String b = "18:54 Pasila asema";
-        muotoiltu.append(s);
-        if (s.length()<15){
-            muotoiltu.append("\t").append(b);
-        } else {
-            muotoiltu.append(b);
-        }
-        System.out.println(muotoiltu);
 
-    } */
+    private static void muotoileParillinen(String asema, String aika) {
+        StringBuilder muotoiltu = new StringBuilder();
+        muotoiltu.append(asema);
+        if (asema.length()<20){
+            for (int i = 0; i <(20-(asema.length())); i++) {
+                muotoiltu.append(" ");
+            }
+            muotoiltu.append(aika);
+        }
+        kokosatsi.append(muotoiltu);
+    }
+
+    public static void muotoilePariton(String aika, String asema) {
+        StringBuilder muotoiltu = new StringBuilder();
+        muotoiltu.append(" - " + aika + "\t " );
+        muotoiltu.append(asema);
+        kokosatsi.append(muotoiltu + "\n");
+
+    }
 
 }
