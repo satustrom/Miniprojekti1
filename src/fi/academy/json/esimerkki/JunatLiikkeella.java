@@ -66,7 +66,7 @@ public class JunatLiikkeella {
 
         }
    }
-   
+
 }
 /*      System.out.println("                     _   _   _   _  _     ___    _____    ____     __      __      __");
         System.out.println("          o O O   _ | | | | | | | \| |   /   \  |_   _|  |__ /    /  \    /  \    /  \'");
