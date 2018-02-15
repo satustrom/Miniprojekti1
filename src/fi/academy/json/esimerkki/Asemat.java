@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Asemat {
 
     private static List<Asematieto> kaikkiAsemat;
     private static List<Asematieto> henkiloAsemat;
+    private static List<String> kaupungit;
     //täällä tulostetaan asemakaupunkeja
     //voit kutsua tätä siältöä mainissa: Asemat.asemaData();
     public static void asemaData() {
@@ -31,6 +31,16 @@ public class Asemat {
 
             //sortattuna kaikista asemista hlöasemat ja tulostetaan ne:
             henkiloAsemat = kaikkiAsemat.stream().filter(a->a.isPassengerTraffic()).collect(Collectors.toList());
+
+           //for (int i = 0; i < kaikkiAsemat.size(); i++) {
+            //    kaupungit.add(kaikkiAsemat.get(i).getStationName());
+            //}
+
+            //kaupungit
+              //      .stream()
+                //    .map(s->s.endsWith(" asema")?s.substring(s.lastIndexOf(" asema"),s.length()):s)
+                  //  .collect(Collectors.toList());
+
            // for(Asematieto asematieto : henkiloAsemat)
              // System.out.println(asematieto.getStationName());
 
@@ -68,9 +78,8 @@ public class Asemat {
             asemaData();
 
         for (int i = 0; i < henkiloAsemat.size(); i++) {
-            if (asemaKoodi.equalsIgnoreCase(henkiloAsemat.get(i).getStationShortCode())) {
+            if (asemaKoodi.equalsIgnoreCase(henkiloAsemat.get(i).getStationShortCode()))
                 return henkiloAsemat.get(i).getStationName();
-            }
         }
 
         if (kaikkiAsemat == null)
