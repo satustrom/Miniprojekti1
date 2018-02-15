@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println(new Date());
         Scanner lukija = new Scanner(System.in);
 
         System.out.println("Tervetuloa käyttämään junahakupalvelua. Valitse hakutoiminto jota haluaisit käyttää?");
@@ -59,7 +58,7 @@ public class Main {
                     System.out.println("Syötä lähijunan kirjaintunnus:");
                     String lahijunanKirjain = lukija.nextLine().toUpperCase();
                     System.out.println("");
-                    System.out.println("Kiitos. Haetaan 10 aikataulua lähijunan tunnuksella " + lahijunanKirjain + ".");
+                    System.out.println("Kiitos. Haetaan 10 aikataulua lähijunan kirjaintunnuksella " + lahijunanKirjain + ".");
                     LahijunanKirjainHaku.haeJuna(lahijunanKirjain);
 
                     // Antaa käyttäjältä hakumetodille: String lahtevienJunienAsema -Olli

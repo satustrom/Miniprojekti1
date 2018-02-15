@@ -61,6 +61,12 @@ public class LahijunanKirjainHaku {
                         }
                 }
             }
+
+        }
+
+        if (k == 0){
+            System.out.println("");
+            System.out.println("Valitsemallasi hakuehdolla ei löytynyt aikatauluja.");
         }
 
     }
