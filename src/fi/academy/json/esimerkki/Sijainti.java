@@ -17,20 +17,24 @@ public class Sijainti {
 
     public static void main(String[] args) {
         //JunatLiikkeella.liikkeella();
-        haeJunanKoordinaatit(3);
+        haeJunanKoordinaatit(12);
     }
 
     public static void haeJunanKoordinaatit (int junaNumero) {
         List<JunaGPS> junat = lueJunanJSONData();
+        boolean loytyiko=false;
 
         for (int i = 0; i <junat.size() ; i++) {
             if (junat.get(i).getTrainNumber()==junaNumero){
                 JunaGPS haettava = junat.get(i);
+                loytyiko=true;
                 System.out.println("\nHakemasi junan sijainti klo " +haettava.aikaLeimaStringina() + "\n\n" + haettava.getLocation());
             }
         }
+        if(!loytyiko){
+            System.out.println("Tietoja hakemastasi junasta ei ole saatavilla.");
+        }
     }
-
 
     private static List<JunaGPS> lueJunanJSONData() {
 
