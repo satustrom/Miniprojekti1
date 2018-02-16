@@ -61,10 +61,10 @@ public class Main {
                         int junaNumero = Integer.parseInt(lukija.nextLine());
                         System.out.println("\nValitse seuraavista, mitä informaatiota haluat saada: \n");
 
-                        System.out.println("1: Perustiedot junasta");
-                        System.out.println("2: Junan koordinaatit");
-                        System.out.println("3: Edellinen tai seuraava asema junan sijainnin perusteella");
-                        System.out.println("Valinta: ");
+                        System.out.println("1: Junan aikataulu ja asemat");
+                        System.out.println("2: Liikkeellä olevan junan sijainti koordinaatteina");
+                        System.out.println("3: Liikkeellä olevan junan edellinen ja seuraava asema");
+                        System.out.println("Vastaus: ");
                         int vastaus = Integer.parseInt(lukija.nextLine());
 
                         if (vastaus == 1) {
