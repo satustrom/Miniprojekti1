@@ -11,6 +11,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Scanner lukija = new Scanner(System.in);
+        System.out.println("========================================================================================================");
+        System.out.println("                     _   _   _   _  _    ___    _____    ____     __      __     __" );
+        System.out.println("          o O O   _ | | | | | | | \\| |  /   \\  |_   _|  |__ /    /  \\    /  \\   /  \\ ");
+        System.out.println("         o       | || | | |_| | | .` |  | - |    | |     |_ \\   | () |  | () | | () | ");
+        System.out.println("        TS__[O]  _\\__/   \\___/  |_|\\_|  |_|_|   _|_|_   |___/   _\\__/   _\\__/  _\\__/ ");
+        System.out.println("        {======|-|_____|"+""+""+"|_____|"+""+""+"|_____|"+""+""+"|______|"+""+""+"|______|"+""+"|______|"+""+""+"|______|"+""+""+"|______|"+""+""+"|_____|"+""+""+"| ");
+        System.out.println("       ./o--000'"+"`-0-00-'"+"`-0-00-'"+"`-0-0-'"+"`-0-0-'"+"`-0-00-'"+"`-0-00-'"+"`-0-0-'"+"`-0-00-'"+"`-0-00-' ");
+        System.out.println("========================================================================================================");
 
         System.out.println("Tervetuloa käyttämään junahakupalvelua. Valitse päävalikosta hakutoiminto, jota haluaisit käyttää.");
         System.out.println("");
@@ -27,7 +35,7 @@ public class Main {
                 System.out.println("4: Aikataulut lähijunista");
                 System.out.println("5: Liikkeellä olevat junat");
                 System.out.println("6: Sulje ohjelma");
-                System.out.println("Vastaus:");
+                System.out.println("Valinta:");
                 int hakuvalinta = Integer.parseInt(lukija.nextLine());
                 System.out.println("-------------------------------------");
 
@@ -52,10 +60,17 @@ public class Main {
                         System.out.println("Syötä vielä junan numero:");
                         int junaNumero = Integer.parseInt(lukija.nextLine());
                         System.out.println("\nValitse seuraavista, mitä informaatiota haluat saada: \n");
+<<<<<<< HEAD
                         System.out.println("1: Junan aikataulu ja asemat");
                         System.out.println("2: Liikkeellä olevan junan sijainti koordinaatteina");
                         System.out.println("3: Liikkeellä olevan junan edellinen ja seuraava asema");
                         System.out.println("Vastaus: ");
+=======
+                        System.out.println("1: Perustiedot junasta");
+                        System.out.println("2: Junan koordinaatit");
+                        System.out.println("3: Edellinen tai seuraava asema junan sijainnin perusteella");
+                        System.out.println("Valinta: ");
+>>>>>>> 62e43c1874ed5ad7a4ec0e5e2763d26eb6632b04
                         int vastaus = Integer.parseInt(lukija.nextLine());
 
                         if (vastaus == 1) {
@@ -120,7 +135,8 @@ public class Main {
             System.out.println("Haku päättynyt. Haluatko palata Päävalikkoon?");
             System.out.println("1: Kyllä, kiitos");
             System.out.println("2: Ei, tämä riittää");
-            System.out.println("Vastaus:");
+            System.out.println("Valinta:");
+            try {
             int vastaus = Integer.parseInt(lukija.nextLine());
             if (vastaus == 1) {
                 continue;
@@ -131,7 +147,9 @@ public class Main {
                 System.out.println("Anteeksi, vastauksesi meni ohi. Palataan Päävalikkoon.");
                 continue;
             }
-
+            } catch (NumberFormatException ex) {
+                System.out.println("Anteeksi, vastauksesi meni ohi. Palataan Päävalikkoon.");
+            }
         }
     }
 }

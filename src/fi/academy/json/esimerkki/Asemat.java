@@ -60,6 +60,7 @@ public class Asemat {
 
     //täällä palautetaan kaupungin nimi, kun hakuun on kirjoitettu asemakoodi.
     //jos asema ei ole matkustusliikenteen käytössä, palautetaan kaupungin lisäksi muistutus siitä
+    //Joissakin junissa on asema- sana aseman nimen perässä. Alla oleva koodi poistaa myös ne.
     //-Satu
 
     public static String palautaKaupunki (String asemaKoodi) {
