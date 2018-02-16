@@ -41,7 +41,7 @@ public class KulkutietoViestit {
             }
         }
         if(!loytyiko){
-            System.out.println("Haettua junaa ei löytynyt.");
+            System.out.println("Tietoja hakemastasi junasta ei ole saatavilla.");
         }
     }
 

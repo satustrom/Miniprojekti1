@@ -52,14 +52,14 @@ public class Main {
                         System.out.println("Syötä vielä junan numero:");
                         int junaNumero = Integer.parseInt(lukija.nextLine());
                         System.out.println("\nValitse seuraavista, mitä informaatiota haluat saada: \n");
-                        System.out.println("1: Perustiedot junasta");
-                        System.out.println("2: Junan koordinaatit");
-                        System.out.println("3: Edellinen tai seuraava asema junan sijainnin perusteella");
+                        System.out.println("1: Junan aikataulu ja asemat");
+                        System.out.println("2: Liikkeellä olevan junan sijainti koordinaatteina");
+                        System.out.println("3: Liikkeellä olevan junan edellinen ja seuraava asema");
                         System.out.println("Vastaus: ");
                         int vastaus = Integer.parseInt(lukija.nextLine());
 
                         if (vastaus == 1) {
-                            System.out.println("Valitsit perustiedot junasta. Haetaan junaa numerolla " + junaNumero + ".\n");
+                            System.out.println("Valitsit aikataulun ja asemat. Haetaan junaa numerolla " + junaNumero + ".\n");
                             TietynJunanKulku.haeJuna(junaNumero);
                         }
                         if(vastaus == 2 ) {
@@ -67,7 +67,7 @@ public class Main {
                             Sijainti.haeJunanKoordinaatit(junaNumero);
                         }
                         if(vastaus == 3) {
-                            System.out.println("Valitsit etsiä junan lähellä olevia asemia. Haetaan junaa numerolla " + junaNumero + ".\n");
+                            System.out.println("Valitsit etsiä kulussa olevan junan lähimmät asemat. Haetaan junaa numerolla " + junaNumero + ".\n");
                             String uusiJunaNumero = Integer.toString(junaNumero);
                             KulkutietoViestit.haeAsema(uusiJunaNumero);
                         }

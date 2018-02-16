@@ -63,6 +63,7 @@ public class TietynJunanKulku {
                         }
                     }
                 } else {
+                    System.out.println("Hakemasi juna on parhaillaan liikkeellä.\n");
                     for (int j = 0; j <lista.size() ; j++) {
                         if (lista.get(j).isCommercialStop() && lista.get(j).isTrainStopping()){
                             asema= Asemat.palautaKaupunki(lista.get(j).getStationShortCode());
