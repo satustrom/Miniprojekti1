@@ -51,26 +51,30 @@ public class JunatLiikkeella {
         System.out.println("Tulostetaan junat välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
 // Tulostetaan junat jotka ovat APIn mukaan tällä hetkellä liikkeellä
         int printatut = 0;
-        for (int i = 0; i < junat.size(); i++) {
-           if (junat.get(i).isRunningCurrently()) {
-                List<TimeTableRow> lista = junat.get(i).timeTableRows;
-                System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Asemalta: %s\n\t Juuri nyt: %s\n\t Määränpää: %s\n"
-                        , junat.get(i).getCommuterLineID()
-                        , junat.get(i).getTrainNumber()
-                        , lista.get(i).haeAikaStringina()
-                        , Asemat.palautaKaupunki(lista.get(0).getStationShortCode())
-                        , Asemat.palautaKaupunki(lista.get(i).getStationShortCode())
-                        , Asemat.palautaKaupunki(lista.get(lista.size() - 1).getStationShortCode()));
-                System.out.println("-------------------------------------");
-                printatut += 1;
+        try {
+            for (int i = 0; i < junat.size(); i++) {
+                if (junat.get(i).isRunningCurrently()) {
+                    List<TimeTableRow> lista = junat.get(i).timeTableRows;
+                    System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Asemalta: %s\n\t Juuri nyt: %s\n\t Määränpää: %s\n"
+                            , junat.get(i).getCommuterLineID()
+                            , junat.get(i).getTrainNumber()
+                            , lista.get(i).haeAikaStringina()
+                            , Asemat.palautaKaupunki(lista.get(0).getStationShortCode())
+                            , Asemat.palautaKaupunki(lista.get(i).getStationShortCode())
+                            , Asemat.palautaKaupunki(lista.get(lista.size() - 1).getStationShortCode()));
+                    System.out.println("-------------------------------------");
+                    printatut += 1;
 
 //Jos yhdelläkään junalla ei ole isRunningCurrently=True niin tulostetaan ilmoitus siitä.
-            } else if (printatut == 0) {
-                System.out.println("-------------------------------------");
-                System.out.println("Valitettavasti VR lakkoilee joten yhtään junaa ei ole ajossa.");
-                break;
-            }
+                } else if (printatut == 0) {
+                    System.out.println("-------------------------------------");
+                    System.out.println("Valitettavasti VR lakkoilee joten yhtään junaa ei ole ajossa.");
+                    break;
+                }
 
+            }
+        } catch (NullPointerException ex){
+            System.out.println("Valitettavasti antamillasi hauilla ei löytynyt junia");
         }
 
 
