@@ -55,6 +55,7 @@ public class LahijunanKirjainHaku {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.println("");
                 System.out.println(k + ". " + lahijunaKirjain + "-junan aikataulu: \n");
+                TietynJunanKulku.kokosatsi = new StringBuilder();
                 for (int j = 0; j < lista.size(); j++) {
                     if (lista.get(j).isTrainStopping())
 

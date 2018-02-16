@@ -21,11 +21,6 @@ public class JSON_pohja_junat {
 
     Juna juna = new Juna();
 
-    public static void main(String[] args) {
-        lueJunanJSONData();
-    }
-
-
     private static void lueJunanJSONData() {
 
         String baseurl = "https://rata.digitraffic.fi/api/v1";
