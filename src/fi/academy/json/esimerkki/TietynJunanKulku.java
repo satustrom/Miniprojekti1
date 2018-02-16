@@ -43,7 +43,7 @@ public class TietynJunanKulku {
         String aikaTaulunAika;
         String toteutunutAika;
 
-
+kokosatsi.setLength(0);
         for (int i = 0; i < junat.size(); i++) {
             if ( junat.get(i).getTrainNumber() == junaNumero) {
                 Juna haettava = junat.get(i);
