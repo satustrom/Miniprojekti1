@@ -39,20 +39,19 @@ public class JunatLiikkeella {
         try {
             junat = mapper.readValue(url, tarkempiListanTyyppi);
         } catch (NullPointerException ex) {
-            System.out.println("Junat listassa virhe");
+            System.out.println("Haulla ei löytynyt yhtään junaa");
         } catch (JsonParseException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Haulla ei löytynyt yhtään junaa");
         } catch (JsonMappingException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Haulla ei löytynyt yhtään junaa");
         } catch (IOException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Haulla ei löytynyt yhtään junaa");
         }
 
         System.out.println("Tulostetaan junat välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
-
+// Tulostetaan junat jotka ovat APIn mukaan tällä hetkellä liikkeellä
         int printatut = 0;
         for (int i = 0; i < junat.size(); i++) {
-
            if (junat.get(i).isRunningCurrently()) {
                 List<TimeTableRow> lista = junat.get(i).timeTableRows;
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Asemalta: %s\n\t Juuri nyt: %s\n\t Määränpää: %s\n"
@@ -65,7 +64,7 @@ public class JunatLiikkeella {
                 System.out.println("-------------------------------------");
                 printatut += 1;
 
-
+//Jos yhdelläkään junalla ei ole isRunningCurrently=True niin tulostetaan ilmoitus siitä.
             } else if (printatut == 0) {
                 System.out.println("-------------------------------------");
                 System.out.println("Valitettavasti VR lakkoilee joten yhtään junaa ei ole ajossa.");
@@ -73,12 +72,10 @@ public class JunatLiikkeella {
             }
 
         }
+
+
    }
 
+
 }
-/*      System.out.println("                     _   _   _   _  _     ___    _____    ____     __      __      __");
-        System.out.println("          o O O   _ | | | | | | | \| |   /   \  |_   _|  |__ /    /  \    /  \    /  \'");
-        System.out.println("         o       | || | | |_| | | .` |   | - |    | |     |_ \   | () |  | () |  | () |");
-        System.out.println("        TS__[O]  _\__/   \___/  |_|\_|   |_|_|   _|_|_   |___/   _\__/   _\__/   _\__/");
-        System.out.println("        {======|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|_|""""""|");
-        System.out.println("        ./o--000'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'""`-0-0-'");*/
+

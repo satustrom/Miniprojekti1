@@ -11,6 +11,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Scanner lukija = new Scanner(System.in);
+        System.out.println("========================================================================================================");
+        System.out.println("                     _   _   _   _  _    ___    _____    ____     __      __     __" );
+        System.out.println("          o O O   _ | | | | | | | \\| |  /   \\  |_   _|  |__ /    /  \\    /  \\   /  \\ ");
+        System.out.println("         o       | || | | |_| | | .` |  | - |    | |     |_ \\   | () |  | () | | () | ");
+        System.out.println("        TS__[O]  _\\__/   \\___/  |_|\\_|  |_|_|   _|_|_   |___/   _\\__/   _\\__/  _\\__/ ");
+        System.out.println("        {======|-|_____|"+""+""+"|_____|"+""+""+"|_____|"+""+""+"|______|"+""+""+"|______|"+""+"|______|"+""+""+"|______|"+""+""+"|______|"+""+""+"|_____|"+""+""+"| ");
+        System.out.println("       ./o--000'"+"`-0-00-'"+"`-0-00-'"+"`-0-0-'"+"`-0-0-'"+"`-0-00-'"+"`-0-00-'"+"`-0-0-'"+"`-0-00-'"+"`-0-00-' ");
+        System.out.println("========================================================================================================");
 
         System.out.println("Tervetuloa käyttämään junahakupalvelua. Valitse päävalikosta hakutoiminto, jota haluaisit käyttää.");
         System.out.println("");
