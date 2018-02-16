@@ -35,7 +35,7 @@ public class Main {
                 System.out.println("4: Aikataulut lähijunista");
                 System.out.println("5: Liikkeellä olevat junat");
                 System.out.println("6: Sulje ohjelma");
-                System.out.println("Vastaus:");
+                System.out.println("Valinta:");
                 int hakuvalinta = Integer.parseInt(lukija.nextLine());
                 System.out.println("-------------------------------------");
 
@@ -63,7 +63,7 @@ public class Main {
                         System.out.println("1: Perustiedot junasta");
                         System.out.println("2: Junan koordinaatit");
                         System.out.println("3: Edellinen tai seuraava asema junan sijainnin perusteella");
-                        System.out.println("Vastaus: ");
+                        System.out.println("Valinta: ");
                         int vastaus = Integer.parseInt(lukija.nextLine());
 
                         if (vastaus == 1) {
@@ -128,7 +128,8 @@ public class Main {
             System.out.println("Haku päättynyt. Haluatko palata Päävalikkoon?");
             System.out.println("1: Kyllä, kiitos");
             System.out.println("2: Ei, tämä riittää");
-            System.out.println("Vastaus:");
+            System.out.println("Valinta:");
+            try {
             int vastaus = Integer.parseInt(lukija.nextLine());
             if (vastaus == 1) {
                 continue;
@@ -139,7 +140,9 @@ public class Main {
                 System.out.println("Anteeksi, vastauksesi meni ohi. Palataan Päävalikkoon.");
                 continue;
             }
-
+            } catch (NumberFormatException ex) {
+                System.out.println("Anteeksi, vastauksesi meni ohi. Palataan Päävalikkoon.");
+            }
         }
     }
 }
