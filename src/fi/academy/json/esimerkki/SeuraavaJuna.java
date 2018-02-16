@@ -24,7 +24,7 @@ public class SeuraavaJuna {
         String hakuehdot = "include_nonstopping=false";
 
         try {
-//Syötetään hakuehdot URLiin
+//Syötetään hakuehdot URLiin/Sami
             URL url = new URL(baseurl + "/live-trains/station/" + lAsema + "/" + kAsema + "?" + hakuehdot);
             ObjectMapper mapper = new ObjectMapper();
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
@@ -33,9 +33,10 @@ public class SeuraavaJuna {
             System.out.println("Seuraava juna välillä: " + Asemat.palautaKaupunki(lAsema) + " - " + Asemat.palautaKaupunki(kAsema));
 
             int i = 0;
-// Luodaan timetablerow lista
+// Luodaan timetablerow lista/Sami
             List<TimeTableRow> lista = junat.get(i).timeTableRows;
 // Luodaan apumuuttujat joilla saadaan aloitettua määrättyä minkä aseman aika tulostetaan ja miltä asemalta matka aloitetaan välipysäkkien tulostus
+//Sami
             int alkuID = 0;
             int loppuID = 0;
             for (int j = 0; j < lista.size(); j++) {
@@ -46,14 +47,14 @@ public class SeuraavaJuna {
                     continue;
                 }
             }
-// Tulostetaan Junan tiedot
+// Tulostetaan Junan tiedot/Sami
             System.out.println("----------------------------------------");
             System.out.printf("Juna %s - %s \n\t Lähtee: %s\n"
                     , junat.get(i).getCommuterLineID()
                     , junat.get(i).getTrainNumber()
                     , lista.get(alkuID).haeAikaStringina());
 
-// Tulostetaan välipysäkit
+// Tulostetaan välipysäkit/Sami
             for (int j = alkuID; j <= loppuID; j++) {
                 if (j % 2 == 1) {
                     System.out.println("\t\t\t\t\t - " + lista.get(j).haeKellonAikaStringina() + " " + Asemat.palautaKaupunki(lista.get(j).getStationShortCode()));
@@ -62,17 +63,17 @@ public class SeuraavaJuna {
 
             System.out.println("----------------------------------------");
 
-
+// Poikkeusten määrittely/Sami
         } catch (NullPointerException ex) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Valitettavasti junaa ei löytynyt.");
         } catch (JsonParseException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Valitettavasti junaa ei löytynyt.");
         } catch (JsonMappingException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Valitettavasti junaa ei löytynyt.");
         } catch (MalformedURLException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Valitettavasti junaa ei löytynyt.");
         } catch (IOException e) {
-            System.out.println("Ei löytynyt");
+            System.out.println("Valitettavasti junaa ei löytynyt.");
         }
     }
 
@@ -80,6 +81,8 @@ public class SeuraavaJuna {
     public static void tietyltaAsemalta(String lahtoasema) throws IOException {
 
 //Muutetaan käyttäjältä saatu kaupunki sitä vastaavaan lyhytkoodiin ja tallennetaan se muuttujaan.
+//Tässä käytetään Asemat-luokassa luotua metodia
+//Sami
         String lAsema = Asemat.palautaLyhytkoodi(lahtoasema);
         List<TimeTableRow> lista;
         List<Juna> junat;
@@ -89,6 +92,8 @@ public class SeuraavaJuna {
 
 
 //Syötetään hakuehdot URLiin
+//laitettu perään "toASCIIString", jotta saadaan URLiin mukaan ääkköset
+//Sami ja Satu
         URL url = null;
 
             url = new URL(URI.create(baseurl + "/live-trains/station/" + lAsema + hakuehdot).toASCIIString());
@@ -99,28 +104,36 @@ public class SeuraavaJuna {
             // System.out.println("Haetaan 5 seuraavaksi lähtevää junaa asemalta: " + Asemat.palautaKaupunki(lAsema) + ".");
 
 
-// Sortataaan junat ajan mukaan ja haetaan oikea lähtöaseman aika
+// Vertaillaan junia ja sortataaan ne lähtöajan mukaan ja haetaan oikea lähtöaseman aika
+//Satu
             Collections.sort(junat, (eka, toka) -> {
                 Date ekaaika = null, tokaaika = null;
                 for (TimeTableRow rivi : eka.getTimeTableRows()) {
+                    //Eli tässä katsotaan, että aikataulusta lähtöasema ja sen lyhytkoodi vastaavat,
+                    //jotta saadaan oikea lähtöaika, eikä esim koko junavuoron lähtöasemaa/Satu
                     if (rivi.getStationShortCode().equals(lAsema)) {
                         ekaaika = rivi.getScheduledTime();
                         break;
                     }
                 }
+                //Tässä tehdään sama juttu kuin edellä toiselle junalle, että niitä voi vertailla/Satu
                 for (TimeTableRow rivi : toka.getTimeTableRows()) {
                     if (rivi.getStationShortCode().equals(lAsema)) {
                         tokaaika = rivi.getScheduledTime();
                         break;
                     }
                 }
+                //Täällä vertaillaan kahta juna-asemaa ja järjestetään ne ajan mukaan/Satu
                 if (ekaaika.equals(tokaaika)) return 0;
                 return ekaaika.after(tokaaika) ? 1 : -1;
             });
-// Tulostetaan junat
+
+// Tulostetaan junat/Sami
             System.out.println("-------------------------------------------");
             for (int i = 0; i < junat.size(); i++) {
                 lista = junat.get(i).timeTableRows;
+                //Tässä vielä katsotaan, että aikataulut tulee vain lähtöaikana, eli kun tyyppi on "DEPARTURE"
+                //Satu
                 TimeTableRow lAsemanRivi = null;
                 for (TimeTableRow rivi : lista) {
                     if (rivi.getStationShortCode().equals(lAsema) && rivi.getType().equals("DEPARTURE")) {
@@ -128,8 +141,8 @@ public class SeuraavaJuna {
                         break;
                     }
                 }
+                //Kun junat on sortattu, tulostetaan täällä niille vielä tarvittavat tiedot/Sami
                 System.out.println((i + 1) + ".");
-                //Collections.sort(lista, new Junavertailija());
                 System.out.printf("Juna %s - %s \n\t Lähtee: %s\n\t Määränpää: %s\n"
                         , junat.get(i).getCommuterLineID()
                         , junat.get(i).getTrainNumber()
@@ -138,7 +151,7 @@ public class SeuraavaJuna {
                 System.out.println("-------------------------------------------");
 
             }
-// Jos lähteviä junia on alle 5 niin tulostetaan viesti perään
+// Jos lähteviä junia on alle 5 niin tulostetaan viesti perään/Satu
         if (junat.size() < 5) {
             System.out.println("Valitettavasti tänään ei lähde enempää junia.");
             System.out.println("-------------------------------------------");
